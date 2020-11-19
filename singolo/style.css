@@ -76,6 +76,8 @@ header {
 .slider-wrapper {
   height: 594px;
   background-image: url("src/img/slider1.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .arrows {
@@ -219,7 +221,7 @@ h2 {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
   max-width: 940px;
-  max-height: 601px;
+  max-height: 611px;
   overflow: hidden;
 }
 
@@ -259,13 +261,15 @@ footer {
   transform: rotate(360deg) scale(1.5);
 }
 
+.hide {
+  display: none;
+}
+
 @media all and (max-width: 1019px) {
   .slider-wrapper {
-    max-width: 768px;
+    width: 768px;
     height: 444px;
     background-image: url("src/img/slider1-768.svg");
-    background-repeat: no-repeat;
-    background-position: center center;
   }
 
   .arrows {
@@ -308,20 +312,27 @@ footer {
 }
 
 @media all and (max-width: 767px) {
+  .header-wrapper {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main-menu {
+    display: none;
+  }
+
   .logo {
-    order: 1;
+    margin: 0;
   }
 
   .slider {
-    border-bottom: 2.21px solid #ea676b;
+    border-bottom: 3px solid #ea676b;
   }
 
   .slider-wrapper {
     max-width: 375px;
-    height: 218.38px;
+    height: 217px;
     background-image: url("src/img/slider1-375.svg");
-    background-repeat: no-repeat;
-    background-position: center center;
   }
 
   .arrows {
@@ -357,11 +368,9 @@ footer {
   }
 
   .grid-gallery {
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 13px;
+    grid-gap: 10px;
     max-width: 315px;
-    max-height: 554px;
+    max-height: 563px;
     overflow: hidden;
   }
 
@@ -376,5 +385,37 @@ footer {
 
   .footer_wrapper {
     justify-content: center;
+  }
+
+  .social-link {
+    margin: 0;
+  }
+
+@media all and (max-width: 374px) {
+  .slider-wrapper {
+    max-width: 320px;
+    background-image: url("src/img/slider1-320.svg");
+  }
+  
+  .portfolio {
+    height: 750px;
+  }
+  
+  .grid-gallery {
+    grid-gap: 10px;
+    max-width: 260px;
+    max-height: 465px;
+    overflow: hidden;
+  }
+  .grid-gallery__img img {
+    max-width: 125px;
+    max-height: 110px;
+  }
+
+  .buttons-container {
+    height: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
   }
 }
