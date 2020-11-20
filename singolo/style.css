@@ -9,7 +9,9 @@
   margin: 0 auto;
 }
 
-header {
+.header {
+  position: fixed;
+  width: 100%;
   background-color: #2d303a;
   border-bottom: 6px solid #323746;
 }
@@ -391,22 +393,23 @@ footer {
     margin: 0;
   }
 
-@media all and (max-width: 374px) {
+  @media all and (max-width: 374px) {
   .slider-wrapper {
     max-width: 320px;
     background-image: url("src/img/slider1-320.svg");
   }
-  
+
   .portfolio {
     height: 750px;
   }
-  
+
   .grid-gallery {
     grid-gap: 10px;
     max-width: 260px;
     max-height: 465px;
     overflow: hidden;
   }
+  
   .grid-gallery__img img {
     max-width: 125px;
     max-height: 110px;
