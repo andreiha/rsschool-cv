@@ -1,33 +1,34 @@
-const menu = document.querySelectorAll('.main-menu__link');
+const links = document.querySelectorAll('.main-menu__link');
+const sections = document.querySelectorAll('body > section');
+
 const buttons = document.querySelectorAll('.button');
 const images = document.querySelectorAll('.grid-gallery__img');
-
 const buttonAll = document.getElementById('buttonAll');
 const buttonWeb = document.getElementById('buttonWeb');
 const buttonGraphic = document.getElementById('buttonGraphic');
 const buttonArtwork = document.getElementById('buttonArtwork');
 
-//Start main menu implementation
-menu.forEach(menuItem => {
-    menuItem.addEventListener('click', (event) => {
-        console.log(event.target);
-        clearAllMenu();
-        event.target.classList.add('main-menu_active');
+//Start main menu JS implementation
+document.addEventListener('scroll', () => {
+    const currentPosition = window.scrollY;
+    sections.forEach(section => {
+        if (section.offsetTop <= currentPosition && (section.offsetTop + section.offsetHeight) > currentPosition) {
+            links.forEach((link) => {
+                link.classList.remove('main-menu_active');
+                if (section.getAttribute('id') == link.getAttribute('href').substring(1)) {
+                    link.classList.add('main-menu_active');
+                };
+            });
+        };
     });
 });
+//End main menu JS implementation
 
-const clearAllMenu = () => {
-    menu.forEach(menuItem => {
-        menuItem.classList.remove('main-menu_active');
-    });
-};
 
-//End main menu implementation
-
-//Start gallery implementation
+//Start gallery JS implementation
 buttons.forEach(button => {
     button.addEventListener('click', (event) => {
-        console.log(event.target);
+//        console.log(event.target);
         clearAllButtons();
         clearAllImages();
         event.target.classList.add('button_active');
@@ -58,4 +59,24 @@ const filterButtonItems = () => {
         };
     });
 };
-//End gallery implementation
+//End gallery JS implementation
+
+
+
+
+
+
+//Start main menu JS implementation
+//menu.forEach(menuItem => {
+//    menuItem.addEventListener('click', (event) => {
+//        console.log(event.target);
+//        clearAllMenu();
+//        event.target.classList.add('main-menu_active');
+//    });
+//});
+
+//const clearAllMenu = () => {
+//    menu.forEach(menuItem => {
+//        menuItem.classList.remove('main-menu_active');
+//    });
+//};
