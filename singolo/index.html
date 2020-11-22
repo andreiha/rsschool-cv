@@ -8,12 +8,12 @@
     <title>Singolo</title>
 </head>
 <body>
-    <header class=header>
+    <header class=header id="home">
         <div class="wrapper header-wrapper">
             <h1 class="logo">SINGOLO</h1>
-            <nav>
+            <nav class="menu-container">
                 <ul class="main-menu">
-                    <li><a class="main-menu__link main-menu_active" href="#">home</a></li>
+                    <li><a class="main-menu__link main-menu_active" href="#home">home</a></li>
                     <span class="main-menu__dot">&#183</span>
                     <li><a class="main-menu__link" href="#services">services</a></li>
                     <span class="main-menu__dot">&#183</span>
@@ -24,6 +24,10 @@
                     <li><a class="main-menu__link" href="#">contact</a></li>
                 </ul>
             </nav>
+        </div>
+        <div class="burger-container">
+            <img id="burger-icon" class src="src/icon/burger-icon.svg" alt="menu-icon">
+            <div id="overlay-tint" class="hidden"></div>
         </div>
     </header>
     <section class="slider" id="slider">

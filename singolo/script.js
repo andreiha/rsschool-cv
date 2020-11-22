@@ -1,3 +1,8 @@
+const buttonBurger = document.getElementById('burger-icon');
+const menuBurger = document.querySelector('.menu-container');
+const logoBurger = document.querySelector('h1');
+const overlayTint = document.getElementById('overlay-tint');
+
 const links = document.querySelectorAll('.main-menu__link');
 const sections = document.querySelectorAll('body > section');
 
@@ -8,7 +13,25 @@ const buttonWeb = document.getElementById('buttonWeb');
 const buttonGraphic = document.getElementById('buttonGraphic');
 const buttonArtwork = document.getElementById('buttonArtwork');
 
-//Start main menu JS implementation
+
+//Start JS for burger menu
+buttonBurger.addEventListener('click', () => {
+    buttonBurger.classList.toggle('rotate');
+    menuBurger.classList.toggle('burger-move');
+    logoBurger.classList.toggle('burger-logo');
+    overlayTint.classList.toggle('hidden');
+    links.forEach(link => {
+        link.addEventListener('click', (event) => {
+            buttonBurger.classList.remove('rotate');
+            menuBurger.classList.remove('burger-move');
+            logoBurger.classList.remove('burger-logo');
+            overlayTint.classList.add('hidden');
+        });
+    });
+});
+//End JS for burger menu
+
+//Start JS for main menu with scrolling implementation
 document.addEventListener('scroll', () => {
     const currentPosition = window.scrollY;
     sections.forEach(section => {
@@ -22,10 +45,9 @@ document.addEventListener('scroll', () => {
         };
     });
 });
-//End main menu JS implementation
+//End JS for main menu with scrolling implementation
 
-
-//Start gallery JS implementation
+//Start JS for gallery
 buttons.forEach(button => {
     button.addEventListener('click', (event) => {
 //        console.log(event.target);
@@ -44,39 +66,34 @@ const clearAllButtons = () => {
 
 const clearAllImages = () => {
     images.forEach(image => {
-        image.classList.remove('hide');
+        image.classList.remove('hidden');
     });
 };
 
 const filterButtonItems = () => {
     images.forEach(image => {
         if (event.target == buttonWeb && !image.classList.contains('webdesign')) {
-            image.classList.add('hide');
+            image.classList.add('hidden');
         } else if (event.target == buttonGraphic && !image.classList.contains('graphicdesign')) {
-            image.classList.add('hide');
+            image.classList.add('hidden');
         } else if (event.target == buttonArtwork && !image.classList.contains('artwork')) {
-            image.classList.add('hide');
+            image.classList.add('hidden');
         };
     });
 };
-//End gallery JS implementation
+//End JS for gallery
 
-
-
-
-
-
-//Start main menu JS implementation
-//menu.forEach(menuItem => {
-//    menuItem.addEventListener('click', (event) => {
-//        console.log(event.target);
+//Start JS for main menu without scrolling
+//links.forEach(link => {
+//    link.addEventListener('click', (event) => {
 //        clearAllMenu();
 //        event.target.classList.add('main-menu_active');
 //    });
 //});
-
+//
 //const clearAllMenu = () => {
-//    menu.forEach(menuItem => {
-//        menuItem.classList.remove('main-menu_active');
+//    links.forEach(link => {
+//        link.classList.remove('main-menu_active');
 //    });
 //};
+//End JS for main menu without scrolling
