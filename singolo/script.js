@@ -6,6 +6,10 @@ const overlayTint = document.getElementById('overlay-tint');
 const links = document.querySelectorAll('.main-menu__link');
 const sections = document.querySelectorAll('body > section');
 
+const leftArrow = document.getElementById('left-arrow');
+const rightArrow = document.getElementById('right-arrow');
+const slide2 = document.querySelector('.slide2-container');
+
 const buttons = document.querySelectorAll('.button');
 const images = document.querySelectorAll('.grid-gallery__img');
 const buttonAll = document.getElementById('buttonAll');
@@ -47,10 +51,21 @@ document.addEventListener('scroll', () => {
 });
 //End JS for main menu with scrolling implementation
 
+//Start JS for slider
+    leftArrow.addEventListener('click', () => {
+        slide2.classList.toggle('slide_top');
+    });
+
+    rightArrow.addEventListener('click', () => {
+        slide2.classList.toggle('slide_top');
+    });
+//End JS for slider
+
+
+
 //Start JS for gallery
 buttons.forEach(button => {
     button.addEventListener('click', (event) => {
-//        console.log(event.target);
         clearAllButtons();
         clearAllImages();
         event.target.classList.add('button_active');
