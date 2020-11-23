@@ -5,6 +5,8 @@ const overlayTint = document.getElementById('overlay-tint');
 
 const links = document.querySelectorAll('.main-menu__link');
 const sections = document.querySelectorAll('body > section');
+const sliderSection = document.querySelector('.slider');
+const buttonHome = document.querySelector('.main-menu__link:first-child');
 
 const leftArrow = document.getElementById('left-arrow');
 const rightArrow = document.getElementById('right-arrow');
@@ -42,8 +44,17 @@ document.addEventListener('scroll', () => {
         if (section.offsetTop <= currentPosition && (section.offsetTop + section.offsetHeight) > currentPosition) {
             links.forEach((link) => {
                 link.classList.remove('main-menu_active');
-                if (section.getAttribute('id') == link.getAttribute('href').substring(1)) {
+                if (section.getAttribute('id') === link.getAttribute('href').substring(1)) {
                     link.classList.add('main-menu_active');
+                };
+                if (sliderSection.offsetHeight === 600 && currentPosition < 600) {
+                    buttonHome.classList.add('main-menu_active');
+                };
+                if (sliderSection.offsetHeight === 450 && currentPosition < 450) {
+                    buttonHome.classList.add('main-menu_active');
+                };
+                if (sliderSection.offsetHeight === 220 && currentPosition < 220) {
+                    buttonHome.classList.add('main-menu_active');
                 };
             });
         };
