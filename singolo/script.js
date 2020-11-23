@@ -10,6 +10,7 @@ const buttonHome = document.querySelector('.main-menu__link:first-child');
 
 const leftArrow = document.getElementById('left-arrow');
 const rightArrow = document.getElementById('right-arrow');
+const slide1 = document.querySelector('.slide1-container');
 const slide2 = document.querySelector('.slide2-container');
 
 const buttons = document.querySelectorAll('.button');
@@ -63,16 +64,41 @@ document.addEventListener('scroll', () => {
 //End JS for main menu with scrolling implementation
 
 //Start JS for slider
-    leftArrow.addEventListener('click', () => {
-        slide2.classList.toggle('slide_top');
+    leftArrow.addEventListener('click', () => {      
+        removeClass();
+        if(slide1.classList.contains('slide_top')) {
+            slide1.classList.remove('slide_top');
+            slide2.classList.add('slide_totheleft');
+            slide2.classList.add('slide_top');
+        } else {
+            slide2.classList.remove('slide_top');
+            slide1.classList.add('slide_totheleft');
+            slide1.classList.add('slide_top');
+        };
     });
 
     rightArrow.addEventListener('click', () => {
-        slide2.classList.toggle('slide_top');
+        removeClass();
+        if(slide2.classList.contains('slide_top')) {
+            slide2.classList.remove('slide_top');
+            slide1.classList.add('slide_totheright');
+            slide1.classList.add('slide_top');
+        } else {
+            slide1.classList.remove('slide_top');
+            slide2.classList.add('slide_totheright');
+            slide2.classList.add('slide_top');
+        };
     });
+
+    const removeClass = () => {
+        slide1.addEventListener("transitionend", () => {
+            slide1.classList.remove('slide_totheright');
+            slide1.classList.remove('slide_totheleft');
+            slide2.classList.remove('slide_totheright');
+            slide2.classList.remove('slide_totheright');
+        });
+    };
 //End JS for slider
-
-
 
 //Start JS for gallery
 buttons.forEach(button => {

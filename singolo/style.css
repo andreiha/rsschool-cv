@@ -62,7 +62,7 @@ section > .wrapper {
   position: fixed;
   left: 71px;
   top: -45px;
-  z-index: 8;
+  z-index: 7;
   transform: translate(0, 69px);
   transition: 0.7s;
 }
@@ -114,7 +114,7 @@ section > .wrapper {
   position: fixed;
   left: 20px;
   top: 26px;
-  z-index: 8;
+  z-index: 7;
   transition: 0.7s;
 }
 
@@ -142,35 +142,34 @@ section > .wrapper {
   height: 100%;
   background: #2d303a;
   opacity: 0.5;
-  z-index: 6;
+  z-index: 5;
 }
 
 .slider {
   position: relative;
   height: 600px;
   margin-top: 95px;
+  overflow: hidden;
 }
 
 .slide1-container {
   background-color: #f06c64;
   border-bottom: 6px solid #ea676b;
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   left: 0;
   right: 0;
-  transition: 0.2s;
 }
 
 .slide2-container {
   background-color: #648bf0;
   border-bottom: 6px solid #5679d4;
   position: absolute;
-  z-index: 0;
+  z-index: 1;
   top: 0;
   left: 0;
   right: 0;
-  transition: 0.2s;
 }
 
 .slide1 {
@@ -190,6 +189,20 @@ section > .wrapper {
 
 .slide_top {
   z-index: 2;
+}
+
+.slide_totheleft {
+  right: -100%;
+  left: 100%;
+  transform: translate(-100%, 0);
+  transition: transform 1s ease-in;
+}
+
+.slide_totheright {
+  left: -100%;
+  right: 100%;
+  transform: translate(100%, 0);
+  transition: transform 1s ease-in;
 }
 
 .arrows {
@@ -436,6 +449,10 @@ footer {
     margin-top: -71px;
   }
 
+  .main-menu li:nth-child(n + 2):before {
+    display: none;
+  }
+
   .slider {
     margin-top: 71px;
   }
@@ -486,7 +503,7 @@ footer {
     position: fixed;
     top: 0px;
     left: -278px;
-    z-index: 7;
+    z-index: 6;
     width: 278px;
     height: 100%;
     background-color: #2d303a;
