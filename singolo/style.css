@@ -77,11 +77,6 @@ section > .wrapper {
   align-items: center;
 }
 
-.burger_active {
-  transform: translate(278px, 0);
-  transition: 1s;
-}
-
 .main-menu__link {
   text-transform: uppercase;
   font-style: normal;
@@ -92,6 +87,14 @@ section > .wrapper {
   letter-spacing: -0.035em;
   color: #ffffff;
   text-decoration: none;
+}
+
+.main-menu li:nth-child(n + 2):before {
+  content: "\2022";
+  font-size: 5px;
+  color: #ffffff;
+  padding-right: 15px;
+  vertical-align: 3px;
 }
 
 .main-menu_active {
@@ -117,6 +120,11 @@ section > .wrapper {
 
 #burger-icon:hover {
   cursor: pointer;
+}
+
+.burger_active {
+  transform: translate(278px, 0);
+  transition: 1s;
 }
 
 .rotate {

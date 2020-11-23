@@ -108,18 +108,3 @@ const filterButtonItems = () => {
     });
 };
 //End JS for gallery
-
-//Start JS for main menu without scrolling
-//links.forEach(link => {
-//    link.addEventListener('click', (event) => {
-//        clearAllMenu();
-//        event.target.classList.add('main-menu_active');
-//    });
-//});
-//
-//const clearAllMenu = () => {
-//    links.forEach(link => {
-//        link.classList.remove('main-menu_active');
-//    });
-//};
-//End JS for main menu without scrolling
