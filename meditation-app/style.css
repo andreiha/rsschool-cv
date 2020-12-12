@@ -73,6 +73,11 @@ button {
   width: 120px;
   border-radius: 50%;
   padding: 30px;
+  outline: none;
+}
+
+.sound-picker button:hover {
+  box-shadow: 0 0 10px #ddd;
 }
 
 .sound-picker button:nth-child(1) {
