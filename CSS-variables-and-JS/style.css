@@ -1,0 +1,55 @@
+:root {
+  --base: #ffc600;
+  --spacing: 20px;
+  --blur: 0px;
+  --brightness: 1;
+  --contrast: 1;
+  --saturate: 1;
+  --invert: 0;
+  --sepia: 0;
+  --grayscale: 0;
+}
+
+img {
+  padding: var(--spacing);
+  background: var(--base);
+  filter: blur(var(--blur)) brightness(var(--brightness))
+    contrast(var(--contrast)) saturate(var(--saturate)) invert(var(--invert))
+    sepia(var(--sepia)) grayscale(var(--grayscale));
+}
+
+.h1 {
+  color: var(--base);
+}
+
+body {
+  text-align: center;
+  background: #193549;
+  color: white;
+  font-family: "helvetica neue", sans-serif;
+  font-weight: 100;
+  font-size: 50px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  flex-wrap: nowrap;
+  justify-self: center;
+  text-align: left;
+  flex-basis: 25%;
+  margin-left: 100px;
+}
+
+.image {
+  flex-basis: 75%;
+}
