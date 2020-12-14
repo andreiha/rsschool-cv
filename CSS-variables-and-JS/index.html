@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>CSS Variables with JS</title>
+</head>
+<body>
+    <h2>Update CSS Variables with <span class="h1">JS</span></h2>
+    <div class="wrapper">
+        <div class="controls">
+            <label for="base">Base color
+                <input type="color" name="base" value="#ffc600">
+            </label>
+            <label for="spacing">Spacing:
+                <input type="range" name="spacing" min="0" max="150" value="20" data-sizing="px">
+            </label>
+            <label for="blur">Blur:
+                <input type="range" name="blur" min="0" max="20" value="0" data-sizing="px">
+            </label>
+            <label for="brightness">Brightness:
+                <input type="range" name="brightness" step="0.1" min="0.1" max="5" value="1">
+            </label>
+            <label for="contrast">Contrast:
+                <input type="range" name="contrast" step="0.1" min="0.1" max="5" value="1">
+            </label>
+            <label for="saturate">Saturate:
+                <input type="range" name="saturate" step="0.1" min="0.1" max="10" value="1">
+            </label>
+            <label for="invert">Invert:
+                <input type="range" name="invert" step="0.1" min="0" max="1" value="0">
+            </label>
+            <label for="sepia">Sepia:
+                <input type="range" name="sepia" step="0.1" min="0" max="1" value="0">
+            </label>
+            <label for="grayscale">Grayscale:
+                <input type="range" name="grayscale" step="0.1" min="0" max="1" value="0">
+            </label>
+        </div>
+        <div class="image">
+            <img src="img/bonya-edit.jpg" alt="Editable image">
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
