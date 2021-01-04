@@ -1,0 +1,10 @@
+* {
+  margin: 0;
+}
+
+#controls {
+  height: 10%;
+}
+canvas {
+  border: black 1px solid;
+}
