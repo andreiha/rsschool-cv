@@ -1,10 +1,14 @@
 * {
   margin: 0;
+  box-sizing: border-box;
 }
 
 #controls {
-  height: 10%;
-}
-canvas {
-  border: black 1px solid;
+  position: fixed;
+  background: rgb(249, 249, 249);
+  width: 100vw;
+  height: 5vh;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
