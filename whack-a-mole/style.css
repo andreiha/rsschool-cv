@@ -31,12 +31,21 @@ h1 {
   border-radius: 1rem;
 }
 
-#button {
-  display: block;
-  margin: 10px auto 0 auto;
-  width: 10rem;
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  width: 60%;
+  margin: 15px auto 0 auto;
+}
+
+.button {
   font-size: 25px;
   font-family: "Amatic SC";
+  font-weight: 400;
+}
+
+.start__button {
+  width: 15rem;
   font-weight: 700;
 }
 
