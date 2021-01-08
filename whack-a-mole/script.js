@@ -5,11 +5,12 @@ const startButton = document.getElementById('start__button');
 const speedButtons = document.querySelectorAll('.speed__button');
 const slowerButton = document.getElementById('slower__button');
 const fasterButton = document.getElementById('faster__button');
-const currentSpeed = document.getElementById('current-speed');
-
+const speedBoard = document.getElementById('current-speed');
+const resultBoard = document.getElementById('max-result');
 
 let lastHole;
 let timeUp = false;
+let alreadyStarted = false;
 let score = 0;
 let basicSpeed = 0;
 let minspeed = 300;
@@ -41,20 +42,27 @@ function peep() {
 }
 
 function startGame() {
-    scoreBoard.textContent = 0;
-    timeUp = false;
-    score = 0;
-    peep();
-    setTimeout(() => timeUp = true, 10000);
+    if (!alreadyStarted) {
+        scoreBoard.textContent = 0;
+        alreadyStarted = true;
+        timeUp = false;
+        startButton.disabled = true;
+        saveRecord ();
+        score = 0;
+        peep();
+        setTimeout(() => timeUp = true, 10000);
+        setTimeout(() => (alreadyStarted = false, startButton.disabled = false), 10000);
+    }
 }
 
 function bonk(e) {
+    if(!e.isTrusted) return;
     score++;
-    this.classList.remove('up');
+    this.parentNode.classList.remove('up');
     scoreBoard.textContent = score;
 }
 
-function changeSpeedSetting (e) {
+function changeSpeedSettings (e) {
     if (e.target === fasterButton) {
         basicSpeed++;
     }
@@ -63,34 +71,45 @@ function changeSpeedSetting (e) {
     }
     basicSpeed === 2 ? fasterButton.disabled = true : fasterButton.disabled = false;
     basicSpeed === -2 ? slowerButton.disabled = true : slowerButton.disabled = false;
-    console.log(basicSpeed);
     changeSpeed();
 }
 
 function changeSpeed() {
+    let speedDisplay;
     if (basicSpeed === 2) {
         minspeed = 200;
         maxspeed = 400;
-    }
-    if (basicSpeed === 1) {
+        speedDisplay = 'Incredible!!!';
+    } if (basicSpeed === 1) {
         minspeed = 200;
         maxspeed = 600;
-    }
-    if (basicSpeed === 0) {
+        speedDisplay = 'Harder!'
+    } if (basicSpeed === 0) {
         minspeed = 300;
         maxspeed = 900;
-    }
-    if (basicSpeed === -1) {
+        speedDisplay = 'Medium'
+    } if (basicSpeed === -1) {
         minspeed = 450;
         maxspeed = 1200;
+        speedDisplay = 'Slower...'
+    } if (basicSpeed === -2) {
+        minspeed = 600;
+        maxspeed = 1400;
+        speedDisplay = 'As a Turtle...'
     }
-    if (basicSpeed === -2) {
-        minspeed = 800;
-        maxspeed = 1500;
+    speedBoard.textContent = `Current speed: ${speedDisplay}`;
+}
+
+function saveRecord () {
+    if (score > localStorage.getItem('max')) {
+        localStorage.setItem('max', score);
     }
-    console.log(minspeed, maxspeed);
+    localStorage.getItem('max') === null ? resultBoard.textContent = 'Your record: 0' : 
+    resultBoard.textContent = `Your record: ${localStorage.getItem('max')}`;
 }
 
 moles.forEach(mole => mole.addEventListener('click', bonk));
 startButton.addEventListener('click', startGame);
-speedButtons.forEach(button => button.addEventListener('click', changeSpeedSetting));
+speedButtons.forEach(button => button.addEventListener('click', changeSpeedSettings));
+window.addEventListener('load', changeSpeed);
+window.addEventListener('load', saveRecord);
