@@ -4,6 +4,7 @@ const Keyboard = {
         keysContainer: null,
         keys: []
     },
+
     eventHandlers: {
         oninput: null,
         onclose: null
@@ -18,11 +19,21 @@ const Keyboard = {
         this.elements.main = document.createElement('div');
         this.elements.keysContainer = document.createElement('div');
         
-        this.elements.main.classList.add('keyboard', '1keyboard_hidden');
+        this.elements.main.classList.add('keyboard', 'keyboard_hidden');
         this.elements.keysContainer.classList.add('keyboard__keys');
+        this.elements.keysContainer.append(this._createKeys());
+        this.elements.keys = this.elements.keysContainer.querySelectorAll('.keyboard__key');
 
         this.elements.main.append(this.elements.keysContainer);
         document.body.append(this.elements.main);
+
+        document.querySelectorAll('.use-keyboard-input').forEach(element => {
+            element.addEventListener('focus', () => {
+                this.open(element.value, currentValue => {
+                    element.value = currentValue;
+                });
+            });
+        });
     },
 
     _createKeys() {
@@ -47,7 +58,7 @@ const Keyboard = {
                 keyElement.classList.add('keyboard__key_wide');
                 keyElement.innerHTML = createIconHTML('backspace');
                 keyElement.addEventListener('click', () => {
-                    this.properties.value = this.properties.value.substring(0, this.properties.length-1);
+                    this.properties.value = this.properties.value.substring(0, this.properties.value.length-1);
                     this._triggerEvent('oninput');
                 });
             } else if (key === 'caps') {
@@ -85,25 +96,43 @@ const Keyboard = {
                     this._triggerEvent('oninput');
                 });
             }
+            fragment.append(keyElement);
+
+            if (insertLineBreak) {
+                fragment.append(document.createElement('br'));
+            }
         });
-    
-        
+        return fragment;
     },
 
     _triggerEvent(handlerName) {
-        console.log("Event Triggered! Event Name: " + handlerName);
+        if (typeof this.eventHandlers[handlerName] == 'function') {
+            this.eventHandlers[handlerName](this.properties.value);
+        }
     },
 
     _toggleCapsLock() {
-        console.log("Caps Lock Toggled");
+        this.properties.capsLock = !this.properties.capsLock;
+
+        for (const key of this.elements.keys) {
+            if (key.childElementCount === 0) {
+                key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+            }
+        }
     },
 
     open(initialValue, oninput, onclose) {
-        
+        this.properties.value = initialValue || '';
+        this.eventHandlers.oninput = oninput;
+        this.eventHandlers.onclose = onclose;
+        this.elements.main.classList.remove('keyboard_hidden');
     },
 
     close() {
-
+        this.properties.value = '';
+        this.eventHandlers.oninput = oninput;
+        this.eventHandlers.onclose = onclose;
+        this.elements.main.classList.add('keyboard_hidden');
     },
 }
 
