@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Canvas</title>
+</head>
+<body>
+    <div id="controls">
+            <span>
+                <input type="checkbox" id="color_checkbox" checked>
+                <label for="color_checkbox">Random color</label>
+                <input type="color" id="color_picker" disabled>
+            </span>
+            <span>
+                <input type="checkbox" id="width_checkbox" checked>
+                <label for="width_checkbox">Random width</label>
+                <input type="range" id="width_picker" min="1" max="100" disabled>
+            </span>
+            <input type="button" id="clear_button" value="Clear All">
+    </div>
+    <canvas id="canvas"></canvas>
+<script src="script.js"></script>
+</body>
+</html>
