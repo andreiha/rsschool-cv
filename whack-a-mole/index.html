@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whack A Mole!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700">
+</head>
+<body>
+    <h1>Whack-a-mole!<span class="score">0</span></h1>
+    <section class="buttons">
+        <button class="speed__button button" id="slower__button">&lt;&lt;Slower</button>
+        <button class="button" id="start__button">Start!</button>
+        <button class="speed__button button" id="faster__button">Faster&gt&gt;</button>
+    </section>
+    <section class="information">
+        <div id="current-speed"></div>
+        <div id="max-result"></div>
+    </section>
+
+    <section class="game">
+        <div class="hole">
+            <div class="mole"></div>
+        </div>
+        <div class="hole">
+            <div class="mole"></div>
+        </div>
+        <div class="hole">
+            <div class="mole"></div>
+        </div>
+        <div class="hole">
+            <div class="mole"></div>
+        </div>
+        <div class="hole">
+            <div class="mole"></div>
+        </div>
+        <div class="hole">
+            <div class="mole"></div>
+        </div>
+    </section>
+<script src="script.js"></script>
+</body>
+</html>

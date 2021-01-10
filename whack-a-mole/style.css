@@ -1,0 +1,92 @@
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  padding: 0;
+  margin: 0;
+  font-family: "Amatic SC";
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 10px;
+  background: #ffc600;
+}
+
+h1 {
+  text-align: center;
+  font-size: 10rem;
+  line-height: 1;
+}
+
+.score {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0 3rem;
+  line-height: 1;
+  border-radius: 1rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  width: 60%;
+  margin: 1.5rem auto 1rem auto;
+}
+
+.button {
+  font-size: 2.5rem;
+  padding: 0.1rem 0.6rem;
+}
+
+#start__button {
+  width: 15rem;
+  font-weight: 700;
+}
+
+.information {
+  display: flex;
+  justify-content: space-evenly;
+  width: 40%;
+  font-size: 2.5rem;
+  margin: 0 auto;
+}
+
+.game {
+  width: 60rem;
+  height: 40rem;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+.hole {
+  flex: 1 0 33.33%;
+  overflow: hidden;
+  position: relative;
+}
+
+.hole:after {
+  display: block;
+  background: url(img/dirt.svg) bottom center no-repeat;
+  background-size: contain;
+  content: "";
+  width: 100%;
+  height: 7rem;
+  position: absolute;
+  z-index: 2;
+  bottom: -3rem;
+}
+
+.mole {
+  background: url(img/mole.svg) bottom center no-repeat;
+  background-size: 60%;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  height: 100%;
+  transition: all 0.4s;
+}
+
+.hole.up .mole {
+  top: 0;
+}
