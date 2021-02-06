@@ -8,10 +8,9 @@
     <title>Raindrops</title>
 </head>
 <body>
+    <div id="game">
     <section id="display-area">
-        <div id="play-zone">
-
-        </div>
+        <div id="play-zone"></div>
         <div id="water-zone">
             <div id="stones"></div>
             <div id="waves">
@@ -20,19 +19,22 @@
                         <path id="wave-defs" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
                     </defs>
                     <g id="wave-parallax">
-                        <use xlink:href="#wave-defs" x="50" y="0" fill="#97e7e6"/>
+                        <use xlink:href="#wave-defs" x="50" y="0" fill="#91d6e6"/>
                         <use xlink:href="#wave-defs" x="50" y="3" fill="#71d6e6"/>
                         <use xlink:href="#wave-defs" x="50" y="6" fill="#91d6e6"/>  
                     </g>
-                </svg>  
+                </svg>
             </div>
+            <div id="waves__bottom"></div>
         </div>
     </section>
     <section id="controls-area">
         <div id="score">Score: <span id="score__output">110</span></div>
         <div id="calc">
             <div id="calc__wrapper">
-                <div id="calc__display"><span id="calc__display__output"></span></div>
+                <div id="calc__display">
+                    <input id="calc__display__output" type="text" disabled>
+                </div>
                 <div id="calc__buttons">
                     <span id="btn-7" class="btn btn-num">7</span>
                     <span id="btn-8" class="btn btn-num">8</span>
@@ -51,6 +53,7 @@
             </div>
         </div>
     </section>
+    </div>
 <script src="script.js"></script>
 </body>
 </html>
