@@ -1,8 +1,14 @@
+const startDisplay = document.getElementById('start-display');
+const playBtn = document.getElementById('start-button__play');
+const howToPlayBtn = document.getElementById('start-button__how-to-play');
+
 const displayOutput = document.getElementById('calc__display__output');
 const calcBtn = document.querySelectorAll('.btn');
 const playZone = document.getElementById('play-zone');
 const waterZone = document.getElementById('water-zone');
-const firstRainDrop = document.querySelector('#play-zone > div');
+
+const audio = document.getElementById('audio');
+const audioIcon = document.getElementById('audio-icon');
 
 let rainDropHeight = '70px';
 let rainDropWidth = '70px';
@@ -11,6 +17,8 @@ let rainDropPreviousPosition = 0;
 let Operator = '';
 let FirstOperand = null;
 let SecondOperand = null;
+
+let gameScore = 0;
 
 const lowWaterLevel = '19%';
 const mediumWaterLevel = '29%';
@@ -21,10 +29,18 @@ const maxPlayZoneHeight = '85%';
 
 const answers = [];
 
+playBtn.addEventListener('click', () => {
+    startDisplay.style.display = 'none';
+    startGame();
+})
+
+audioIcon.addEventListener('click', audioControl);
+
 calcBtn.forEach(v => v.addEventListener ('click', (e) => calcBtnPress(e.target.textContent)));
 
 function startGame (intervalBetweenRainDrops = 10000, fallingSpeedRainDrops) {
     new RainDrop(fallingSpeedRainDrops);
+    audioControl ();
     let startTimer = setInterval (() => {
         if (playZone.style.height !== mediumPlayZoneHeight) {
             new RainDrop(fallingSpeedRainDrops);
@@ -138,6 +154,7 @@ function moveWaves() {
     } else if (playZone.style.height === mediumPlayZoneHeight) {
         playZone.style.height = lowPlayZoneHeight;
         waterZone.style.height = maxWaterLevel;
+        audioControl ();
     } else if (playZone.style.height === lowPlayZoneHeight) {
         console.log("Максимальный уровень воды");
     } else {
@@ -207,8 +224,21 @@ function calcBtnPress (value) {
 };
 
 function checkValue () {
+    let firstRainDrop = document.querySelector('#play-zone > div');
     if (answers[0] == Number(displayOutput.value)) {
         answers.shift();
         firstRainDrop.remove();
+    }
+}
+
+function audioControl () {
+    audio.autoplay = false;
+    audio.volume = 0.3;
+    if (audio.paused) {
+        audio.play();
+        audioIcon.innerHTML = '&#128265;';
+    } else {
+        audio.pause();
+        audioIcon.innerHTML = '&#128263;';
     }
 }

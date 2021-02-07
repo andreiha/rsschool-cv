@@ -8,8 +8,14 @@
     <title>Raindrops</title>
 </head>
 <body>
+    <div id="start-display">
+        <div id="start-buttons">
+            <input type="button" id="start-button__play" class="start-btn" value="Play &#9654;">
+            <input type="button" id="start-button__how-to-play" class="start-btn" value="How to play &#63;">
+        </div>
+    </div>
     <div id="game">
-    <section id="display-area">
+        <section id="display-area">
         <div id="play-zone"></div>
         <div id="water-zone">
             <div id="stones"></div>
@@ -27,9 +33,11 @@
             </div>
             <div id="waves__bottom"></div>
         </div>
-    </section>
-    <section id="controls-area">
-        <div id="score">Score: <span id="score__output">110</span></div>
+        </section>
+        <section id="controls-area">
+        <div id="score">Score: <span id="score__output">0</span>
+            <span id="audio-icon">&#128263;</span>
+        </div>
         <div id="calc">
             <div id="calc__wrapper">
                 <div id="calc__display">
@@ -52,8 +60,9 @@
                 </div>
             </div>
         </div>
-    </section>
+        </section>
     </div>
+    <audio id="audio" src="sound/sea-sound.mp3" loop></audio>
 <script src="script.js"></script>
 </body>
 </html>

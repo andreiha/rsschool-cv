@@ -5,6 +5,51 @@
 
 body {
   font-family: "Lato", sans-serif;
+  text-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+}
+
+#start-display {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  background: rgb(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#start-buttons {
+  width: 70%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.start-btn {
+  width: 280px;
+  height: 100px;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 25px;
+  margin-top: 20px;
+  background-color: rgb(145, 214, 230, 0.9);
+  user-select: none;
+  outline: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  border-radius: 10px;
+  text-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(rgb(203, 232, 229), rgb(145, 214, 230));
+}
+
+.start-btn:hover {
+  background: linear-gradient(rgb(145, 214, 230), rgb(203, 232, 229));
+}
+
+.start-btn:active {
+  background: rgb(145, 214, 230);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5) inset;
 }
 
 #game {
@@ -117,6 +162,23 @@ body {
   box-sizing: border-box;
   font-weight: 700;
   font-size: 1.3em;
+}
+
+#score__output {
+  color: rgb(153, 51, 0);
+}
+
+#score::before {
+  content: "\2605";
+  font-size: 1.1em;
+  color: rgb(250, 200, 0);
+  position: relative;
+  left: -10px;
+}
+
+#audio-icon {
+  cursor: pointer;
+  margin-left: 5px;
 }
 
 #calc {
