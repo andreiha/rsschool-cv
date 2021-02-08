@@ -12,11 +12,12 @@ const audioIcon = document.getElementById('audio-icon');
 
 let rainDropHeight = '70px';
 let rainDropWidth = '70px';
+let rainDropTopPosition = '-70px';
 let rainDropPreviousPosition = 0;
 
-let Operator = '';
-let FirstOperand = null;
-let SecondOperand = null;
+let lastOperator = '';
+let lastFirstOperand = null;
+let lastSecondOperand = null;
 
 let gameScore = 0;
 
@@ -27,68 +28,64 @@ const lowPlayZoneHeight = '65%';
 const mediumPlayZoneHeight = '75%';
 const maxPlayZoneHeight = '85%';
 
-const answers = [];
-const rainDropsMap = new Map();
+const rainDropsArr = []; 
 
-playBtn.addEventListener('click', () => {
-    startDisplay.style.display = 'none';
-    startGame();
-})
-
-audioIcon.addEventListener('click', audioControl);
-
-calcBtn.forEach(v => v.addEventListener ('click', (e) => calcBtnPress(e.target.textContent)));
-
-document.body.addEventListener('keyup', (e) => {
-    if (+displayOutput.value > 999) {
-        displayOutput.value = displayOutput.value;
-    } else if (e.code.includes('Digit') || e.code.includes('Numpad') && (e.keyCode >= 96 && e.keyCode <= 105)) {
-        displayOutput.value = displayOutput.value + e.key;
-    };
-    if (e.code.includes('Enter')) {
-        this.checkValue ();
-        console.log('Нажат Enter');
-        displayOutput.value = '';
-    }
-})
+let intervalBetweenRainDrops = 10000;
+let startTimerId = null;
 
 function startGame (intervalBetweenRainDrops = 10000, fallingSpeedRainDrops) {
-    new RainDrop(fallingSpeedRainDrops);
-    audioControl ();
-    let startTimer = setInterval (() => {
+    audioControl();
+    const firstRainDrop = new RainDrop(fallingSpeedRainDrops);
+    rainDropsArr.push(firstRainDrop);
+    startTimerId = setInterval (() => {
         if (playZone.style.height !== mediumPlayZoneHeight) {
-            new RainDrop(fallingSpeedRainDrops);
+            const nextRainDrop = new RainDrop(fallingSpeedRainDrops);
+            rainDropsArr.push(nextRainDrop);
         };
         if (playZone.style.height === mediumPlayZoneHeight) {
-            clearInterval(startTimer);
+            stopGame();
         };
     }, intervalBetweenRainDrops);
 }
+
+function stopGame () {
+    clearInterval(startTimerId);
+    intervalBetweenRainDrops = 10000;
+    rainDropsArr.length = 0;
+    //playZone.removeAttribute('style');
+    //waterZone.removeAttribute('style');
+}
+
 class RainDrop {
-    element = null;
+    element = undefined;
+    firstOperand = undefined;
+    secondOperand = undefined;
+    operator = undefined;
+    result = undefined;
+    timerMoveDownElement = undefined;
     
-    constructor(fallingSpeedRainDrops) {
-        setOperator();
-        setFirstOperand();
-        setSecondOperand();
-        this.addAnswer();
-        this.element = this.createElement();
+    constructor(fallingSpeedRainDrops, operator, operandOne, operandTwo) {
+        this.operator = operator || setOperator();
+        this.firstOperand = operandOne || setFirstOperand();
+        this.secondOperand = operandTwo || setSecondOperand();
+        this.result = getResult(this.firstOperand, this.secondOperand, this.operator);
+        this.element = this.createElement(this.operator, this.firstOperand, this.secondOperand);
         this.moveDownElement(fallingSpeedRainDrops);
     }
     
-    createElement = () => {
+    createElement = (operator, firstOperand, secondOperand) => {
         let element = document.createElement('div');
         element.className = 'rain-drop';
         element.style.height = rainDropHeight;
         element.style.width = rainDropWidth;
         element.style.left = `${setStartPosition()}px`;
-        element.style.top = '-70px';
+        element.style.top = rainDropTopPosition;
         playZone.append(element);
 
-        let operator = document.createElement('div');
-        operator.className = 'operator';
-        operator.innerHTML = Operator;
-        element.append(operator);
+        let oper = document.createElement('div');
+        oper.className = 'operator';
+        oper.innerHTML = operator;
+        element.append(oper);
 
         let operands = document.createElement('div');
         operands.className = 'operands';
@@ -96,16 +93,17 @@ class RainDrop {
 
         let operOne = document.createElement('div');
         operOne.className = 'operand__one';
-        operOne.innerHTML = FirstOperand;
+        operOne.innerHTML = firstOperand;
         operands.append(operOne);
 
         let operTwo = document.createElement('div');
         operTwo.className = 'operand__two';
-        operTwo.innerHTML = SecondOperand;
+        operTwo.innerHTML = secondOperand;
         operands.append(operTwo);
 
         return element;
     }
+    
     deleteElement = () => {
         this.element.remove();
     }
@@ -114,30 +112,26 @@ class RainDrop {
         let numRainDropHeight = parseInt(rainDropHeight);
         let maxTop = playZone.offsetHeight - numRainDropHeight;
         console.log(maxTop);
-        let timerId = setInterval (() => {
+        this.timerMoveDownElement = setInterval (() => {
             this.element.style.top = (parseInt(this.element.style.top) + 1) + 'px';
             if (parseInt(this.element.style.top) >= maxTop) {
-                clearInterval(timerId);
+                clearInterval(this.timerMoveDownElement);
                 this.deleteElement();
                 moveWaves();
             }
         }, fallingSpeedRainDrops);
     }
+}
 
-    addAnswer = () => {
-        let result = null;
-        if (Operator === '+') {
-            result = FirstOperand + SecondOperand;        
-        } else if (Operator === '-') {
-            result = FirstOperand - SecondOperand;
-        } else if (Operator === '*') {
-            result = FirstOperand * SecondOperand;
-        } else if (Operator === '/') {
-            result = FirstOperand / SecondOperand;
-        }
-        console.log(result);
-        answers.push(result);
-        console.log(answers);
+function getResult(firstValue, secondValue, operator) {
+    if (operator === '+') {
+        return firstValue + secondValue;        
+    } else if (operator === '-') {
+        return firstValue - secondValue;
+    } else if (operator === '*') {
+        return firstValue * secondValue;
+    } else if (operator === '/') {
+        return firstValue / secondValue;
     }
 }
 
@@ -161,7 +155,8 @@ function moveWaves() {
     } else if (playZone.style.height === mediumPlayZoneHeight) {
         playZone.style.height = lowPlayZoneHeight;
         waterZone.style.height = maxWaterLevel;
-        audioControl ();
+        audioControl();
+        stopGame();
     } else if (playZone.style.height === lowPlayZoneHeight) {
         console.log("Максимальный уровень воды");
     } else {
@@ -173,40 +168,40 @@ function moveWaves() {
 function setOperator (min = 1, max = 4) {
     let value = Math.round(min - 0.5 + Math.random() * (max - min + 1));
     if (value === 1) {
-        Operator = '+';
+        lastOperator = '+';
     } else if (value === 2) {
-        Operator = '-';
+        lastOperator = '-';
     } else if (value === 3) {
-        Operator = '*';
+        lastOperator = '*';
     } else if (value === 4) {
-        Operator = '/';
+        lastOperator = '/';
     }
-    return Operator; 
+    return lastOperator; 
 }
 
 function setFirstOperand (min = 5, max = 20) {
-    FirstOperand = Math.round(min - 0.5 + Math.random() * (max - min + 1));
-    return FirstOperand;
+    lastFirstOperand = Math.round(min - 0.5 + Math.random() * (max - min + 1));
+    return lastFirstOperand;
 }
 
 function setSecondOperand (min = 2, max = 10) {
-    SecondOperand = Math.round(min - 0.5 + Math.random() * (max - min + 1));
-    if (Operator == '/' && FirstOperand > max) {
+    lastSecondOperand = Math.round(min - 0.5 + Math.random() * (max - min + 1));
+    if (lastOperator == '/' && lastFirstOperand > max) {
         console.log("Замена второго операнда: нет делителя в диапазоне");
-        SecondOperand = FirstOperand;
-    } else if (Operator == '/' && FirstOperand % SecondOperand !== 0) {
+        lastSecondOperand = lastFirstOperand;
+    } else if (lastOperator == '/' && lastFirstOperand % lastSecondOperand !== 0) {
         console.log("Замена второго операнда: не / без остатка");
         setSecondOperand (min, max);
     }
-    if (Operator == '-' && FirstOperand < SecondOperand) {
+    if (lastOperator == '-' && lastFirstOperand < lastSecondOperand) {
         console.log("Замена второго операнда: отрицательное значение при -");
         setSecondOperand (min, max);
     }
-    if (Operator == '-' && FirstOperand === SecondOperand) {
+    if (lastOperator == '-' && lastFirstOperand === lastSecondOperand) {
         console.log("Замена второго операнда: результат равен 0 при -");
         setSecondOperand (min, max);
     }
-    return SecondOperand;
+    return lastSecondOperand;
 }
 
 function calcBtnPress (value) {
@@ -216,7 +211,7 @@ function calcBtnPress (value) {
     } else if (value === 'Delete') {
         displayOutput.value = displayOutput.value.slice(0, -1);
     } else if (value === 'Enter') {
-        this.checkValue ();
+        checkValue (displayOutput.value);
         console.log('Значение передано функции');
         displayOutput.value = '';
     } else {
@@ -231,13 +226,11 @@ function calcBtnPress (value) {
 };
 
 function checkValue () {
-    let firstRainDrop = document.querySelector('#play-zone > div');
-    if (answers[0] == Number(displayOutput.value)) {
-        answers.shift();
-        firstRainDrop.remove();
-
-
-
+    if (rainDropsArr[0].result == Number(displayOutput.value)) {
+        rainDropsArr[0].element.style.boxShadow = '0 0 10px rgba(100, 230, 96, 0.829)';
+        rainDropsArr[0].element.style.transform = 'scale(0)';
+        rainDropsArr[0].element.style.transition = 'transform 1s';
+        rainDropsArr.shift();
     }
 }
 
@@ -252,3 +245,25 @@ function audioControl () {
         audioIcon.innerHTML = '&#128263;';
     }
 }
+
+playBtn.addEventListener('click', () => {
+    startDisplay.style.display = 'none';
+    startGame();
+})
+
+audioIcon.addEventListener('click', audioControl);
+
+calcBtn.forEach(v => v.addEventListener ('click', (e) => calcBtnPress(e.target.textContent)));
+
+document.body.addEventListener('keyup', (e) => {
+    if (+displayOutput.value > 999) {
+        displayOutput.value = displayOutput.value;
+    } else if (e.code.includes('Digit') || e.code.includes('Numpad') && (e.keyCode >= 96 && e.keyCode <= 105)) {
+        displayOutput.value = displayOutput.value + e.key;
+    };
+    if (e.code.includes('Enter')) {
+        checkValue (displayOutput.value);
+        console.log('Нажат Enter');
+        displayOutput.value = '';
+    }
+})
