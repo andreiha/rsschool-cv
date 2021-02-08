@@ -28,6 +28,7 @@ const mediumPlayZoneHeight = '75%';
 const maxPlayZoneHeight = '85%';
 
 const answers = [];
+const rainDropsMap = new Map();
 
 playBtn.addEventListener('click', () => {
     startDisplay.style.display = 'none';
@@ -37,6 +38,19 @@ playBtn.addEventListener('click', () => {
 audioIcon.addEventListener('click', audioControl);
 
 calcBtn.forEach(v => v.addEventListener ('click', (e) => calcBtnPress(e.target.textContent)));
+
+document.body.addEventListener('keyup', (e) => {
+    if (+displayOutput.value > 999) {
+        displayOutput.value = displayOutput.value;
+    } else if (e.code.includes('Digit') || e.code.includes('Numpad') && (e.keyCode >= 96 && e.keyCode <= 105)) {
+        displayOutput.value = displayOutput.value + e.key;
+    };
+    if (e.code.includes('Enter')) {
+        this.checkValue ();
+        console.log('Нажат Enter');
+        displayOutput.value = '';
+    }
+})
 
 function startGame (intervalBetweenRainDrops = 10000, fallingSpeedRainDrops) {
     new RainDrop(fallingSpeedRainDrops);
@@ -125,13 +139,6 @@ class RainDrop {
         answers.push(result);
         console.log(answers);
     }
-
-//    checkValue = () => {
-//        if (answers[0] == Number(displayOutput.value)) {
-//            answers.shift();
-//            this.deleteElement();
-//        }
-//    }
 }
 
 function setStartPosition() {
@@ -228,12 +235,15 @@ function checkValue () {
     if (answers[0] == Number(displayOutput.value)) {
         answers.shift();
         firstRainDrop.remove();
+
+
+
     }
 }
 
 function audioControl () {
     audio.autoplay = false;
-    audio.volume = 0.3;
+    audio.volume = 0.4;
     if (audio.paused) {
         audio.play();
         audioIcon.innerHTML = '&#128265;';
