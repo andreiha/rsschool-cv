@@ -16,23 +16,23 @@
     </div>
     <div id="game">
         <section id="display-area">
-        <div id="play-zone"></div>
-        <div id="water-zone">
-            <div id="stones"></div>
-            <div id="waves">
-                <svg id="waves__svg" viewBox="0 24 150 28" preserveAspectRatio="none">
-                    <defs>
-                        <path id="wave-defs" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-                    </defs>
-                    <g id="wave-parallax">
-                        <use xlink:href="#wave-defs" x="50" y="0" fill="#91d6e6"/>
-                        <use xlink:href="#wave-defs" x="50" y="3" fill="#71d6e6"/>
-                        <use xlink:href="#wave-defs" x="50" y="6" fill="#91d6e6"/>  
-                    </g>
-                </svg>
+            <div id="play-zone"></div>
+            <div id="water-zone">
+                <div id="waves">
+                    <svg id="waves__svg" viewBox="0 24 150 28" preserveAspectRatio="none">
+                        <defs>
+                            <path id="wave-defs" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                        </defs>
+                        <g id="wave-parallax">
+                            <use xlink:href="#wave-defs" x="50" y="0" fill="#91d6e6"/>
+                            <use xlink:href="#wave-defs" x="50" y="3" fill="#71d6e6"/>
+                            <use xlink:href="#wave-defs" x="50" y="6" fill="#91d6e6"/>  
+                        </g>
+                    </svg>
+                </div>
+                <div id="waves__bottom"></div>
             </div>
-            <div id="waves__bottom"></div>
-        </div>
+            <div id="stones"></div>
         </section>
         <section id="controls-area">
         <div id="score">Score: <span id="score__output">0</span>

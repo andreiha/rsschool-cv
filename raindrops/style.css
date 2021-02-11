@@ -10,7 +10,7 @@ body {
 
 #start-display {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   width: 100%;
   height: 100%;
   background: rgb(0, 0, 0, 0.9);
@@ -63,6 +63,7 @@ body {
   background: linear-gradient(to bottom, white 0 50%, rgb(214, 237, 235) 100%);
   height: 100vh;
   flex-grow: 1;
+  position: relative;
 }
 
 #play-zone {
@@ -74,6 +75,7 @@ body {
   height: 9%;
   width: 100%;
   position: relative;
+  z-index: 2;
   margin-top: -4%;
 }
 
@@ -115,11 +117,22 @@ body {
   }
 }
 
+#stones {
+  background-image: url("img/stones400.png");
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translate(-50%);
+  width: 400px;
+  height: 150px;
+}
+
 .rain-drop {
   background-color: rgb(180, 230, 230);
   border-radius: 50px;
   border: 2px solid rgb(122, 210, 210);
   position: absolute;
+  z-index: 1;
   display: flex;
   align-items: center;
   font-weight: 600;
@@ -127,7 +140,7 @@ body {
 }
 
 .operator {
-  flex-basis: 40%;
+  flex-basis: 35%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -135,10 +148,11 @@ body {
 }
 
 .operands {
-  flex-basis: 60%;
+  flex-basis: 40%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
+  align-items: center;
   font-size: 27px;
 }
 
@@ -161,18 +175,19 @@ body {
   border: 1px solid rgb(255, 255, 255);
   box-sizing: border-box;
   font-weight: 700;
-  font-size: 1.3em;
+  font-size: 21px;
   user-select: none;
   position: relative;
 }
 
 #score__output {
+  font-size: 23px;
   color: rgb(153, 51, 0);
 }
 
 #score::before {
   content: "\2605";
-  font-size: 1.1em;
+  font-size: 25px;
   color: rgb(250, 200, 0);
   position: relative;
   left: -10px;
@@ -216,7 +231,7 @@ body {
   width: 100%;
   background: none;
   border: none;
-  font-size: 4em;
+  font-size: 60px;
   text-align: center;
 }
 
@@ -237,7 +252,7 @@ body {
   align-items: center;
   box-shadow: 0px 0px 0px 1px rgb(176, 176, 176);
   font-weight: 700;
-  font-size: 2em;
+  font-size: 30px;
   cursor: pointer;
 }
 
@@ -251,7 +266,7 @@ body {
 }
 
 .btn-wd {
-  font-size: 1em;
+  font-size: 15px;
 }
 
 #btn-clear {
@@ -273,6 +288,11 @@ body {
   #controls-area {
     flex-basis: 40%;
   }
+  #stones {
+    background-image: url("img/stones250.png");
+    width: 250px;
+    height: 125px;
+  }
 }
 
 @media all and (max-width: 578px) {
@@ -282,12 +302,6 @@ body {
 }
 
 @media all and (max-width: 500px) {
-  #controls-area {
-    flex-basis: 60%;
-  }
-}
-
-@media all and (max-width: 475px) {
   #controls-area {
     flex-basis: 50%;
   }
@@ -322,7 +336,13 @@ body {
     flex-basis: 60%;
   }
 
-  #audio {
+  #stones {
+    background-image: url("img/stones180.png");
+    width: 180px;
+    height: 90px;
+  }
+
+  #audio-icon {
     display: none;
   }
 }
