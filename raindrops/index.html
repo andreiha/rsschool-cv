@@ -8,10 +8,21 @@
     <title>Raindrops</title>
 </head>
 <body>
-    <div id="start-display">
-        <div id="start-buttons">
+    <div id="start-screen" class="screens">
+        <div class="screen-buttons">
             <input type="button" id="start-button__play" class="start-btn" value="Play &#9654;">
             <input type="button" id="start-button__how-to-play" class="start-btn" value="How to play &#63;">
+        </div>
+    </div>
+    <div id="finish-screen" class="screens">
+        <div class="screen-buttons">
+            <input type="button" id="finish-button__play" class="start-btn" value="Play again &#8634;">
+            <input type="button" id="finish-button__how-to-play" class="start-btn" value="How to play &#63;">
+        </div>
+        <div id="stats">
+            <div class="stats__text">Your score is: <span id="stats__result">245</span> points &#128293;</div>
+            <div class="stats__text">Tasks solved: <span id="stats__right">23</span></div>
+            <div class="stats__text">Wrong decisions: <span id="stats__mistakes">23</span></div>
         </div>
     </div>
     <div id="game">

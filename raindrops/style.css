@@ -8,7 +8,7 @@ body {
   text-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
 }
 
-#start-display {
+.screens {
   position: absolute;
   z-index: 3;
   width: 100%;
@@ -17,9 +17,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
-#start-buttons {
+#finish-screen {
+  display: none;
+}
+
+.screen-buttons {
   width: 70%;
   display: flex;
   justify-content: space-evenly;
@@ -50,6 +55,16 @@ body {
 .start-btn:active {
   background: rgb(145, 214, 230);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.5) inset;
+}
+
+#stats {
+  margin-top: 50px;
+}
+
+.stats__text {
+  color: #d6eeee;
+  font-size: 28px;
+  user-select: none;
 }
 
 #game {
