@@ -10,6 +10,8 @@ const waterZone = document.getElementById('water-zone');
 const audio = document.getElementById('audio');
 const audioIcon = document.getElementById('audio-icon');
 
+const scoreOutput = document.getElementById('score__output');
+
 let rainDropHeight = '70px';
 let rainDropWidth = '70px';
 let rainDropTopPosition = '-70px';
@@ -19,7 +21,7 @@ let lastOperator = '';
 let lastFirstOperand = null;
 let lastSecondOperand = null;
 
-let gameScore = 0;
+let gameScoreStartStep = 10;
 let isStartGame = false;
 
 const lowWaterLevel = '19%';
@@ -50,6 +52,7 @@ function stopGame () {
     intervalBetweenRainDrops = 6000;
     isStartGame = false;
     rainDropsArr.length = 0;
+//    gameScoreStartStep = 10;
 //    playZone.removeAttribute('style');
 //    waterZone.removeAttribute('style');
 }
@@ -117,6 +120,7 @@ class RainDrop {
                 rainDropsArr.shift();
                 this.element.remove();
                 clearInterval(this.timerMoveDownElement);
+                getGameScore('minus');
             }
         }, fallingSpeedRainDrops);
     }
@@ -226,6 +230,7 @@ function checkAnswer () {
         rainDropsArr[0].element.style.transition = 'transform 1s';
         rainDropsArr[0].wasDecided = true;
         rainDropsArr.shift();
+        getGameScore('plus');
     } else if (rainDropsArr[0].result !== Number(displayOutput.value)) {
         rainDropsArr[0].element.style.boxShadow = '0 0 5px 10px rgba(255, 69, 0, 0.8)';
         setTimeout (() => {
@@ -245,6 +250,27 @@ function audioControl () {
         audioIcon.innerHTML = '&#128263;';
     }
 }
+
+function getGameScore (direction) {
+    if (direction === 'plus') {
+        if (scoreOutput.innerHTML === '0') {
+            scoreOutput.innerHTML = gameScoreStartStep;
+            ++gameScoreStartStep;
+        } else {
+            scoreOutput.innerHTML = +scoreOutput.innerHTML + gameScoreStartStep;
+            ++gameScoreStartStep;
+        }
+    }
+    if (direction === 'minus') {
+        if (scoreOutput.innerHTML !== '0' || +scoreOutput.innerHTML < 0) {
+            scoreOutput.innerHTML = +scoreOutput.innerHTML - gameScoreStartStep;
+            --gameScoreStartStep;
+            if (+scoreOutput.innerHTML < 0) {
+                scoreOutput.innerHTML = 0;
+            }
+        }
+    }
+}  
 
 playBtn.addEventListener('click', () => {
     startDisplay.style.display = 'none';
