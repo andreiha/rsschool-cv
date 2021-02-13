@@ -18,7 +18,6 @@ const scoreOutput = document.getElementById('score__output');
 const audio = document.getElementById('audio');
 const audioIcon = document.getElementById('audio-icon');
 
-
 let rainDropHeight = '70px';
 let rainDropWidth = '70px';
 let rainDropTopPosition = '-70px';
@@ -43,24 +42,36 @@ const maxPlayZoneHeight = '85%';
 
 const rainDropsArr = [];
 
-let intervalBetweenRainDrops = 6000;
 let startTimerId = null;
+let increaseComplexityTimerId = null;
+
+let manualSetOperand = false;
+let firstOperandMin = 6;
+let firstOperandMax = 8;
+let secondOperandMin = 2;
+let secondOperandMax = 8;
+let fallingSpeedRainDrops = 25;
+let intervalBetweenRainDrops = 8000;
 
 
-function startGame(intervalBetweenRainDrops = 6000, fallingSpeedRainDrops) {
+function startGame() {
     isStartGame = !isStartGame;
+    increaseComplexity();
     refreshToDefault();
     audioControl();
-    const firstRainDrop = new RainDrop(fallingSpeedRainDrops);
+    const firstRainDrop = new RainDrop();
     rainDropsArr.push(firstRainDrop);
-    startTimerId = setInterval(() => {
-        const nextRainDrop = new RainDrop(fallingSpeedRainDrops);
+    startTimerId = setTimeout(function repeatCalls() {
+        const nextRainDrop = new RainDrop();
         rainDropsArr.push(nextRainDrop);
+        startTimerId = setTimeout(repeatCalls, intervalBetweenRainDrops);
+        console.log('Перезапуск Raindrops'); 
     }, intervalBetweenRainDrops);
 }
 
 function stopGame() {
     clearInterval(startTimerId);
+    clearInterval(increaseComplexityTimerId);
     writeStats();
     isStartGame = false;
     rainDropsArr.forEach(e => e.element.remove());
@@ -77,13 +88,13 @@ class RainDrop {
     timerMoveDownElement = undefined;
     wasDecided = false;
 
-    constructor(fallingSpeedRainDrops, operator, operandOne, operandTwo) {
+    constructor(operator, operandOne, operandTwo) {
         this.operator = operator || setOperator();
         this.firstOperand = operandOne || setFirstOperand();
         this.secondOperand = operandTwo || setSecondOperand();
         this.result = getResult(this.firstOperand, this.secondOperand, this.operator);
         this.element = this.createElement(this.operator, this.firstOperand, this.secondOperand);
-        this.moveDownElement(fallingSpeedRainDrops);
+        this.moveDownElement();
     }
 
     createElement = (operator, firstOperand, secondOperand) => {
@@ -117,10 +128,9 @@ class RainDrop {
         return element;
     }
 
-    moveDownElement = (fallingSpeedRainDrops = 30) => {
+    moveDownElement = () => {
         let numRainDropHeight = parseInt(rainDropHeight);
         let maxTop = playZone.offsetHeight - numRainDropHeight;
-        console.log(maxTop);
         this.timerMoveDownElement = setInterval(() => {
             if (!isStartGame) {
                 clearInterval(this.timerMoveDownElement);
@@ -189,27 +199,30 @@ function setOperator(min = 1, max = 4) {
     return lastOperator;
 }
 
-function setFirstOperand(min = 5, max = 20) {
-    lastFirstOperand = Math.round(min - 0.5 + Math.random() * (max - min + 1));
+function setFirstOperand() {
+    lastFirstOperand = Math.round(firstOperandMin - 0.5 + Math.random() * (firstOperandMax - firstOperandMin + 1));
     return lastFirstOperand;
 }
 
-function setSecondOperand(min = 2, max = 10) {
-    lastSecondOperand = Math.round(min - 0.5 + Math.random() * (max - min + 1));
-    if (lastOperator == '/' && lastFirstOperand > max) {
+function setSecondOperand() {
+    lastSecondOperand = Math.round(secondOperandMin - 0.5 + Math.random() * (secondOperandMax - secondOperandMin + 1));
+    if (lastOperator == '/' && lastFirstOperand > secondOperandMax) {
         console.log("Замена второго операнда: нет делителя в диапазоне");
         lastSecondOperand = lastFirstOperand;
     } else if (lastOperator == '/' && lastFirstOperand % lastSecondOperand !== 0) {
         console.log("Замена второго операнда: не / без остатка");
-        setSecondOperand(min, max);
+        setSecondOperand();
     }
     if (lastOperator == '-' && lastFirstOperand < lastSecondOperand) {
         console.log("Замена второго операнда: отрицательное значение при -");
-        setSecondOperand(min, max);
+        setSecondOperand();
     }
     if (lastOperator == '-' && lastFirstOperand === lastSecondOperand) {
         console.log("Замена второго операнда: результат равен 0 при -");
-        setSecondOperand(min, max);
+        setSecondOperand();
+    }
+    if (lastOperator == '*') {
+        lastSecondOperand = Math.round(lastSecondOperand / 2);    
     }
     return lastSecondOperand;
 }
@@ -221,7 +234,6 @@ function calcBtnPress(value) {
         displayOutput.value = displayOutput.value.slice(0, -1);
     } else if (value === 'Enter') {
         checkAnswer(displayOutput.value);
-        console.log('Значение передано функции');
         displayOutput.value = '';
     } else {
         if (+displayOutput.value > 999) {
@@ -233,6 +245,21 @@ function calcBtnPress(value) {
         }
     }
 };
+
+function keyboardPress(e) {
+    if (+displayOutput.value > 999) {
+        displayOutput.value = displayOutput.value;
+    } else if (e.code.includes('Digit') || e.code.includes('Numpad') && (e.keyCode >= 96 && e.keyCode <= 105)) {
+        displayOutput.value = displayOutput.value + e.key;
+    };
+    if (e.code.includes('Enter')) {
+        checkAnswer(displayOutput.value);
+        displayOutput.value = '';
+    }
+    if (e.code.includes('Backspace')) {
+        displayOutput.value = displayOutput.value.slice(0, -1);
+    }
+}
 
 function checkAnswer() {
     if (rainDropsArr[0].result === Number(displayOutput.value)) {
@@ -296,10 +323,32 @@ function refreshToDefault() {
     scoreOutput.innerHTML = 0;
     counterMistakes = 0;
     counterRight = 0;
+    firstOperandMin = 6;
+    firstOperandMax = 8;
+    secondOperandMin = 2;
+    secondOperandMax = 8;
+    fallingSpeedRainDrops = 25;
+    intervalBetweenRainDrops = 8000;
     playZone.removeAttribute('style');
     waterZone.removeAttribute('style');
 }
 
+function increaseComplexity() {
+    increaseComplexityTimerId = setInterval(() => {
+        if (fallingSpeedRainDrops > 9) {
+            fallingSpeedRainDrops -= 1.5;
+            intervalBetweenRainDrops -= 450;
+            console.log(`Увеличена скорость падения капель, значение: ${fallingSpeedRainDrops}, интервал: ${intervalBetweenRainDrops}`);
+        }
+        if (!manualSetOperand) { 
+            firstOperandMin += 0.2;
+            ++firstOperandMax;
+            secondOperandMin += 0.2;
+            secondOperandMax += 0.5;
+            console.log(`Сложность: firstOp(${firstOperandMin}, ${firstOperandMax}), secondOp(${secondOperandMin}, ${secondOperandMax})`);
+        }
+    }, 10000);
+}
 
 startPlayBtn.addEventListener('click', () => {
     startScreen.style.display = 'none';
@@ -315,14 +364,4 @@ audioIcon.addEventListener('click', audioControl);
 
 calcBtn.forEach(v => v.addEventListener('click', (e) => calcBtnPress(e.target.textContent)));
 
-document.body.addEventListener('keyup', (e) => {
-    if (+displayOutput.value > 999) {
-        displayOutput.value = displayOutput.value;
-    } else if (e.code.includes('Digit') || e.code.includes('Numpad') && (e.keyCode >= 96 && e.keyCode <= 105)) {
-        displayOutput.value = displayOutput.value + e.key;
-    };
-    if (e.code.includes('Enter')) {
-        checkAnswer(displayOutput.value);
-        displayOutput.value = '';
-    }
-})
+document.body.addEventListener('keyup', (e) => keyboardPress(e));
