@@ -13,6 +13,34 @@
             <input type="button" id="start-button__play" class="start-btn" value="Play &#9654;">
             <input type="button" id="start-button__how-to-play" class="start-btn" value="How to play &#63;">
         </div>
+        <div id="customization-section">
+            <div id="customize-head">
+                <input type="checkbox" id="сustomize-checkbox">&nbsp;
+                <label for="сustomize-checkbox">Customize value</label>
+            </div>    
+            <div hidden id="customize-table">
+                <p class="customize__title">Select the range of the first value (1-99):</p>
+                <label for="first-value__from">From</label>
+                <input type="number" id="first-value__from" class="value-validation" min="1" max="99">
+                <label for="first-value__to">- To</label>
+                <input type="number" id="first-value__to" class="value-validation" min="1" max="99">
+                <p class="customize__title">Select the range of the second value (1-99):</p>
+                <label for="second-value__from">From</label>
+                <input type="number" id="second-value__from" class="value-validation" min="1" max="99">
+                <label for="second-value__to">- To</label>
+                <input type="number" id="second-value__to" class="value-validation" min="1" max="99">
+                <p class="customize__title">Select operators:</p>
+                <label for="operator__+">+</label>
+                <input type="checkbox" id="operator__+" data-operator="+" class="operator-validation" checked>&#8195;
+                <label for="operator__-">&#8722;</label>
+                <input type="checkbox" id="operator__-" data-operator="-" class="operator-validation" checked>&#8195;
+                <label for="operator__*">&#215</label>
+                <input type="checkbox" id="operator__*" data-operator="*" class="operator-validation" checked>&#8195;
+                <label for="operator__/">&#247</label>
+                <input type="checkbox" id="operator__/" data-operator="/" class="operator-validation" checked>
+            </div>
+            <p hidden id="customize-warning">Set the correct value!</p>
+        </div>
     </div>
     <div id="finish-screen" class="screens">
         <div class="screen-buttons">

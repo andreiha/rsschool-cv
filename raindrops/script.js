@@ -18,6 +18,18 @@ const scoreOutput = document.getElementById('score__output');
 const audio = document.getElementById('audio');
 const audioIcon = document.getElementById('audio-icon');
 
+const сustomizeCheckbox = document.getElementById('сustomize-checkbox');
+const customizeTable = document.getElementById('customize-table');
+const customizeFirstValueFrom = document.getElementById('first-value__from');
+const customizeFirstValueTo = document.getElementById('first-value__to');
+const customizeSecondValueFrom = document.getElementById('second-value__from');
+const customizeSecondValueTo = document.getElementById('second-value__to');
+const customizeWarning = document.getElementById('customize-warning');
+const customizeNumberValidation = Array.from(document.querySelectorAll('.value-validation'));
+const customizeOperatorValidation = Array.from(document.querySelectorAll('.operator-validation'));
+let customizeCheckedOperatorArr = [];
+
+
 let rainDropHeight = '70px';
 let rainDropWidth = '70px';
 let rainDropTopPosition = '-70px';
@@ -56,16 +68,19 @@ let intervalBetweenRainDrops = 8000;
 
 function startGame() {
     isStartGame = !isStartGame;
-    increaseComplexity();
     refreshToDefault();
+    increaseComplexity();
+    if (manualSetOperand){
+        console.log('Запуск ManualValues из startGame')
+        setManualValues();
+    }
     audioControl();
     const firstRainDrop = new RainDrop();
     rainDropsArr.push(firstRainDrop);
     startTimerId = setTimeout(function repeatCalls() {
         const nextRainDrop = new RainDrop();
         rainDropsArr.push(nextRainDrop);
-        startTimerId = setTimeout(repeatCalls, intervalBetweenRainDrops);
-        console.log('Перезапуск Raindrops'); 
+        startTimerId = setTimeout(repeatCalls, intervalBetweenRainDrops); 
     }, intervalBetweenRainDrops);
 }
 
@@ -74,6 +89,7 @@ function stopGame() {
     clearInterval(increaseComplexityTimerId);
     writeStats();
     isStartGame = false;
+    manualSetOperand = false;
     rainDropsArr.forEach(e => e.element.remove());
     rainDropsArr.length = 0;
     finishScreen.style.display = 'flex';
@@ -186,17 +202,23 @@ function moveWaves() {
 }
 
 function setOperator(min = 1, max = 4) {
-    let value = Math.round(min - 0.5 + Math.random() * (max - min + 1));
-    if (value === 1) {
-        lastOperator = '+';
-    } else if (value === 2) {
-        lastOperator = '-';
-    } else if (value === 3) {
-        lastOperator = '*';
-    } else if (value === 4) {
-        lastOperator = '/';
+    if (!manualSetOperand) {
+        let value = Math.round(min - 0.5 + Math.random() * (max - min + 1));
+        if (value === 1) {
+            lastOperator = '+';
+        } else if (value === 2) {
+            lastOperator = '-';
+        } else if (value === 3) {
+            lastOperator = '*';
+        } else if (value === 4) {
+            lastOperator = '/';
+        }
+        return lastOperator;
+    } else {
+        let randomIndex = Math.floor(Math.random() * customizeCheckedOperatorArr.length);
+        lastOperator = customizeCheckedOperatorArr[randomIndex].dataset.operator;
+        return lastOperator;
     }
-    return lastOperator;
 }
 
 function setFirstOperand() {
@@ -206,10 +228,11 @@ function setFirstOperand() {
 
 function setSecondOperand() {
     lastSecondOperand = Math.round(secondOperandMin - 0.5 + Math.random() * (secondOperandMax - secondOperandMin + 1));
-    if (lastOperator == '/' && lastFirstOperand > secondOperandMax) {
+    if (lastOperator == '/' && lastFirstOperand < secondOperandMax) {
         console.log("Замена второго операнда: нет делителя в диапазоне");
         lastSecondOperand = lastFirstOperand;
-    } else if (lastOperator == '/' && lastFirstOperand % lastSecondOperand !== 0) {
+    }
+    if (lastOperator == '/' && lastFirstOperand % lastSecondOperand !== 0) {
         console.log("Замена второго операнда: не / без остатка");
         setSecondOperand();
     }
@@ -350,9 +373,46 @@ function increaseComplexity() {
     }, 10000);
 }
 
+function enableManualValues() {
+    if (!сustomizeCheckbox.checked) {
+        customizeTable.hidden = true;
+        manualSetOperand = false;
+        customizeWarning.hidden = true;
+    }
+    else if (сustomizeCheckbox.checked) {
+        customizeTable.hidden = false;
+        manualSetOperand = true;
+        customizeFirstValueFrom.placeholder = firstOperandMin;
+        customizeFirstValueTo.placeholder = firstOperandMax;
+        customizeSecondValueFrom.placeholder = secondOperandMin;
+        customizeSecondValueTo.placeholder = secondOperandMax;
+    }
+}
+
+function setManualValues() {
+    if (manualSetOperand && customizeNumberValidation.every(e => e.value >= 1 && e.value <= 99)) {
+        firstOperandMin = +customizeFirstValueFrom.value;
+        firstOperandMax = +customizeFirstValueTo.value;
+        secondOperandMin = +customizeSecondValueFrom.value;
+        secondOperandMax = +customizeSecondValueTo.value;
+        customizeCheckedOperatorArr = customizeOperatorValidation.filter(e => e.checked === true);
+    }
+}
+
+
 startPlayBtn.addEventListener('click', () => {
-    startScreen.style.display = 'none';
-    startGame();
+    if (!manualSetOperand) {
+        startScreen.style.display = 'none';
+        startGame();
+    }
+    if (manualSetOperand) {
+        if (customizeNumberValidation.every(e => e.value >= 1 && e.value <= 99)) {
+            startScreen.style.display = 'none';
+            startGame();
+        } else {
+            customizeWarning.hidden = false;
+        }
+    }
 })
 
 finishPlayBtn.addEventListener('click', () => {
@@ -364,4 +424,10 @@ audioIcon.addEventListener('click', audioControl);
 
 calcBtn.forEach(v => v.addEventListener('click', (e) => calcBtnPress(e.target.textContent)));
 
-document.body.addEventListener('keyup', (e) => keyboardPress(e));
+document.body.addEventListener('keyup', (e) => {
+    if (startScreen.style.display === 'none') {
+        keyboardPress(e);
+    }
+})
+
+сustomizeCheckbox.addEventListener('click', enableManualValues);

@@ -6,6 +6,7 @@
 body {
   font-family: "Lato", sans-serif;
   text-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
 }
 
 .screens {
@@ -29,6 +30,7 @@ body {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  margin-top: 20vh;
 }
 
 .start-btn {
@@ -55,6 +57,21 @@ body {
 .start-btn:active {
   background: rgb(145, 214, 230);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.5) inset;
+}
+
+#customization-section {
+  color: #d6eeee;
+  margin-top: 20px;
+  font-size: 17px;
+  height: 185px;
+}
+
+#customize-head {
+  text-align: center;
+}
+
+.customize__title {
+  margin-top: 5px;
 }
 
 #stats {
