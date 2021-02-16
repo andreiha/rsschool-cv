@@ -14,8 +14,10 @@ const playZone = document.getElementById('play-zone');
 const waterZone = document.getElementById('water-zone');
 
 const scoreOutput = document.getElementById('score__output');
-const audio = document.getElementById('audio');
 const audioIcon = document.getElementById('audio-icon');
+const waveSound = document.getElementById('wave-sound');
+const correctSound = document.getElementById('correct-sound');
+const wrongSound = document.getElementById('wrong-sound');
 
 const сustomizeCheckbox = document.getElementById('сustomize-checkbox');
 const customizeTable = document.getElementById('customize-table');
@@ -71,7 +73,7 @@ function startGame() {
     if (manualSetOperand) {
         setManualValues();
     }
-    audioControl();
+    controlWaveSound();
     const firstRainDrop = new RainDrop();
     rainDropsArr.push(firstRainDrop);
     startTimerId = setTimeout(function repeatCalls() {
@@ -191,7 +193,7 @@ function moveWaves() {
     } else if (playZone.style.height === mediumPlayZoneHeight) {
         playZone.style.height = lowPlayZoneHeight;
         waterZone.style.height = maxWaterLevel;
-        audioControl();
+        controlWaveSound();
         stopGame();
     } else {
         playZone.style.height = maxPlayZoneHeight;
@@ -277,6 +279,7 @@ function keyboardPress(e) {
 
 function checkAnswer() {
     if (rainDropsArr[0].result === Number(displayOutput.value)) {
+        playCorrectSound();
         rainDropsArr[0].element.style.boxShadow = '0 0 5px 10px rgba(100, 230, 95, 0.8)';
         rainDropsArr[0].element.style.transform = 'scale(0)';
         rainDropsArr[0].element.style.transition = 'transform 1s';
@@ -285,6 +288,7 @@ function checkAnswer() {
         getGameScore('plus');
         ++counterRight;
     } else if (rainDropsArr[0].result !== Number(displayOutput.value)) {
+        playWrongSound();
         rainDropsArr[0].element.style.boxShadow = '0 0 5px 10px rgba(255, 69, 0, 0.8)';
         setTimeout(() => {
             rainDropsArr[0].element.style.boxShadow = '';
@@ -293,16 +297,26 @@ function checkAnswer() {
     }
 }
 
-function audioControl() {
-    audio.autoplay = false;
-    audio.volume = 0.4;
-    if (audio.paused && waterZone.style.height !== maxWaterLevel) {
-        audio.play();
+function controlWaveSound() {
+    waveSound.autoplay = false;
+    waveSound.volume = 0.4;
+    if (waveSound.paused && waterZone.style.height !== maxWaterLevel) {
+        waveSound.play();
         audioIcon.innerHTML = '&#128265;';
     } else {
-        audio.pause();
+        waveSound.pause();
         audioIcon.innerHTML = '&#128263;';
     }
+}
+
+function playCorrectSound() {
+    correctSound.volume = 0.1;
+    correctSound.play();
+}
+
+function playWrongSound() {
+    wrongSound.volume = 0.1;
+    wrongSound.play();
 }
 
 function getGameScore(direction) {
@@ -412,7 +426,7 @@ scoreOKBtn.addEventListener('click', () => {
     startScreen.style.display = 'flex';
 })
 
-audioIcon.addEventListener('click', audioControl);
+audioIcon.addEventListener('click', controlWaveSound);
 
 calcBtn.forEach(v => v.addEventListener('click', (e) => calcBtnPress(e.target.textContent)));
 

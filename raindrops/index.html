@@ -17,7 +17,7 @@
             <div id="customize-head">
                 <input type="checkbox" id="сustomize-checkbox">&nbsp;
                 <label for="сustomize-checkbox">Customize value</label>
-            </div>    
+            </div>
             <div hidden id="customize-table">
                 <p class="customize__title">Select the range of the first value (1-99):</p>
                 <label for="first-value__from">From</label>
@@ -31,13 +31,13 @@
                 <input type="number" id="second-value__to" class="value-validation" min="1" max="99">
                 <p class="customize__title">Select operators:</p>
                 <label for="operator__+">+</label>
-                <input type="checkbox" id="operator__+" data-operator="+" class="operator-validation" checked>&#8195;
+                <input type="checkbox" data-operator="+" class="operator-validation" checked>&#8195;
                 <label for="operator__-">&#8722;</label>
-                <input type="checkbox" id="operator__-" data-operator="-" class="operator-validation" checked>&#8195;
+                <input type="checkbox" data-operator="-" class="operator-validation" checked>&#8195;
                 <label for="operator__*">&#215</label>
-                <input type="checkbox" id="operator__*" data-operator="*" class="operator-validation" checked>&#8195;
+                <input type="checkbox" data-operator="*" class="operator-validation" checked>&#8195;
                 <label for="operator__/">&#247</label>
-                <input type="checkbox" id="operator__/" data-operator="/" class="operator-validation" checked>
+                <input type="checkbox" data-operator="/" class="operator-validation" checked>
             </div>
             <p hidden id="customize-warning">Set the correct value!</p>
         </div>
@@ -99,7 +99,9 @@
         </div>
         </section>
     </div>
-    <audio id="audio" src="sound/sea-sound.mp3" loop></audio>
+    <audio id="wave-sound" src="sound/sea-sound.mp3" loop></audio>
+    <audio id="correct-sound" src="sound/correct-answer.mp3"></audio>
+    <audio id="wrong-sound" src="sound/wrong-answer.mp3"></audio>
 <script src="script.js"></script>
 </body>
 </html>

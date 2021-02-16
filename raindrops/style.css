@@ -179,6 +179,7 @@ body {
   align-items: center;
   font-weight: 600;
   box-sizing: border-box;
+  user-select: none;
 }
 
 .operator {
