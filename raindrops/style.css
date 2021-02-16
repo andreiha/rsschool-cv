@@ -236,13 +236,6 @@ body {
   left: -10px;
 }
 
-#audio-icon {
-  cursor: pointer;
-  user-select: none;
-  margin-left: 10px;
-  position: absolute;
-}
-
 #calc {
   display: flex;
   justify-content: center;
@@ -327,6 +320,37 @@ body {
   grid-row: 4;
 }
 
+#settings {
+  width: 100px;
+  margin: 0 auto;
+  background-color: rgb(241, 241, 241);
+  height: 38px;
+  line-height: 35px;
+  border-radius: 20px;
+  border: 1px solid rgb(255, 255, 255);
+  user-select: none;
+  display: flex;
+  justify-content: center;
+}
+
+#settings__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 70px;
+}
+
+#fullscreen-icon {
+  font-size: 33px;
+  margin-bottom: 7px;
+  cursor: pointer;
+}
+
+#audio-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
 @media all and (max-width: 768px) {
   #controls-area {
     flex-basis: 40%;
@@ -383,9 +407,5 @@ body {
     background-image: url("img/stones180.png");
     width: 180px;
     height: 90px;
-  }
-
-  #audio-icon {
-    display: none;
   }
 }

@@ -14,10 +14,11 @@ const playZone = document.getElementById('play-zone');
 const waterZone = document.getElementById('water-zone');
 
 const scoreOutput = document.getElementById('score__output');
-const audioIcon = document.getElementById('audio-icon');
 const waveSound = document.getElementById('wave-sound');
 const correctSound = document.getElementById('correct-sound');
 const wrongSound = document.getElementById('wrong-sound');
+const audioIcon = document.getElementById('audio-icon');
+const fullscreenIcon = document.getElementById('fullscreen-icon');
 
 const сustomizeCheckbox = document.getElementById('сustomize-checkbox');
 const customizeTable = document.getElementById('customize-table');
@@ -404,6 +405,16 @@ function setManualValues() {
     }
 }
 
+function toggleFullScreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  }
+
 
 startPlayBtn.addEventListener('click', () => {
     if (!manualSetOperand) {
@@ -426,8 +437,6 @@ scoreOKBtn.addEventListener('click', () => {
     startScreen.style.display = 'flex';
 })
 
-audioIcon.addEventListener('click', controlWaveSound);
-
 calcBtn.forEach(v => v.addEventListener('click', (e) => calcBtnPress(e.target.textContent)));
 
 document.body.addEventListener('keyup', (e) => {
@@ -437,3 +446,7 @@ document.body.addEventListener('keyup', (e) => {
 })
 
 сustomizeCheckbox.addEventListener('click', enableManualValues);
+
+audioIcon.addEventListener('click', controlWaveSound);
+
+fullscreenIcon.addEventListener('click', toggleFullScreen);
