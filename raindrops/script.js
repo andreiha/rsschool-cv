@@ -31,7 +31,6 @@ const customizeNumberValidation = Array.from(document.querySelectorAll('.value-v
 const customizeOperatorValidation = Array.from(document.querySelectorAll('.operator-validation'));
 let customizeCheckedOperatorArr = [];
 
-
 let rainDropHeight = '70px';
 let rainDropWidth = '70px';
 let rainDropTopPosition = '-70px';
@@ -42,10 +41,12 @@ let lastFirstOperand = null;
 let lastSecondOperand = null;
 
 let isStartGame = false;
+let isHowToPlayMode = false;
 let gameScoreStartStep = 10;
 let counterScore = 0;
 let counterMistakes = 0;
 let counterRight = 0;
+let silentMode = false;
 
 const lowWaterLevel = '19%';
 const mediumWaterLevel = '29%';
@@ -70,6 +71,7 @@ let intervalBetweenRainDrops = 8000;
 
 function startGame() {
     isStartGame = !isStartGame;
+    isHowToPlayMode = false;
     increaseComplexity();
     if (manualSetOperand) {
         setManualValues();
@@ -222,23 +224,26 @@ function setFirstOperand() {
 
 function setSecondOperand() {
     lastSecondOperand = Math.round(secondOperandMin - 0.5 + Math.random() * (secondOperandMax - secondOperandMin + 1));
-    if (lastOperator == '/' && lastFirstOperand < secondOperandMax) {
-        console.log("Замена второго операнда: нет делителя в диапазоне");
-        lastSecondOperand = lastFirstOperand;
-    }
     if (lastOperator == '/' && lastFirstOperand % lastSecondOperand !== 0) {
         console.log("Замена второго операнда: не / без остатка");
-        setSecondOperand();
+        for (let i = Math.ceil(secondOperandMin); i <= Math.floor(secondOperandMax); i++) {
+            if (lastFirstOperand % i === 0) {
+                setSecondOperand();
+                break;
+            } else {
+                lastSecondOperand = lastFirstOperand;
+            }
+        }      
     }
-    if (lastOperator == '-' && lastFirstOperand < lastSecondOperand) {
-        console.log("Замена второго операнда: отрицательное значение при -");
-        setSecondOperand();
+    if (lastOperator == '-' && lastFirstOperand <= lastSecondOperand) {
+        console.log("Замена второго операнда: отрицательное или 0 значение при -");
+        if (lastFirstOperand <= Math.ceil(secondOperandMin)) {
+            lastSecondOperand = lastFirstOperand - 1;
+        } else {
+            setSecondOperand();
+        }
     }
-    if (lastOperator == '-' && lastFirstOperand === lastSecondOperand) {
-        console.log("Замена второго операнда: результат равен 0 при -");
-        setSecondOperand();
-    }
-    if (lastOperator == '*') {
+    if (lastOperator == '*' && !manualSetOperand) {
         lastSecondOperand = Math.round(lastSecondOperand / 2);    
     }
     return lastSecondOperand;
@@ -304,20 +309,27 @@ function controlWaveSound() {
     if (waveSound.paused && waterZone.style.height !== maxWaterLevel) {
         waveSound.play();
         audioIcon.innerHTML = '&#128265;';
+        silentMode = false;
     } else {
         waveSound.pause();
         audioIcon.innerHTML = '&#128263;';
+        silentMode = true;
     }
 }
 
 function playCorrectSound() {
-    correctSound.volume = 0.1;
-    correctSound.play();
+    if (!silentMode) {
+        correctSound.volume = 0.1;
+        correctSound.play();
+    }
+    
 }
 
 function playWrongSound() {
-    wrongSound.volume = 0.1;
-    wrongSound.play();
+    if (!silentMode) {
+        wrongSound.volume = 0.1;
+        wrongSound.play();
+    }
 }
 
 function getGameScore(direction) {
@@ -364,7 +376,7 @@ function refreshToDefault() {
 
 function increaseComplexity() {
     increaseComplexityTimerId = setInterval(() => {
-        if (fallingSpeedRainDrops > 9) {
+        if (fallingSpeedRainDrops > 7) {
             fallingSpeedRainDrops -= 1.5;
             intervalBetweenRainDrops -= 450;
             console.log(`Увеличена скорость падения капель, значение: ${fallingSpeedRainDrops}, интервал: ${intervalBetweenRainDrops}`);
@@ -415,6 +427,63 @@ function toggleFullScreen() {
     }
   }
 
+function startHowToPlayMode() {
+    isHowToPlayMode = true;
+    startScreen.style.display = 'none';
+    isStartGame = !isStartGame;
+    controlWaveSound();
+    let drop = new RainDrop('+', 2, 3);
+    rainDropsArr.push(drop);
+    setTimeout(() => displayOutput.value = '6', 3000);
+    setTimeout(() => {
+        checkAnswer();
+        displayOutput.value = '';
+    }, 6000);
+    setTimeout(() => displayOutput.value = '5', 8000);
+    setTimeout(() => {
+        checkAnswer();
+        displayOutput.value = '';
+        console.log(rainDropsArr);
+    }, 10000);
+    setTimeout(() => {
+        drop = new RainDrop('*', 2, 2);
+        rainDropsArr.push(drop);
+    }, 11000);
+    setTimeout(() => displayOutput.value = '3', 15000);
+    setTimeout(() => {
+        checkAnswer();
+        displayOutput.value = '';
+    }, 17000);
+    setTimeout(() => displayOutput.value = '6', 20000);
+    setTimeout(() => {
+        checkAnswer();
+        displayOutput.value = '';
+    }, 22000);
+    setTimeout(() => {
+        drop = new RainDrop('-', 5, 3);
+        rainDropsArr.push(drop);
+    }, 24000);
+    setTimeout(() => displayOutput.value = '1', 28000);
+    setTimeout(() => {
+        checkAnswer();
+        displayOutput.value = '';
+    }, 30000);
+    setTimeout(() => displayOutput.value = '3', 32000);
+    setTimeout(() => {
+        checkAnswer();
+        displayOutput.value = '';
+    }, 34000);
+    setTimeout(() => {
+        drop = new RainDrop('/', 6, 3);
+        rainDropsArr.push(drop);
+    }, 35000);
+    setTimeout(() => displayOutput.value = '3', 40000);
+    setTimeout(() => {
+        checkAnswer();
+        displayOutput.value = '';
+    }, 43000);
+}
+
 
 startPlayBtn.addEventListener('click', () => {
     if (!manualSetOperand) {
@@ -431,10 +500,14 @@ startPlayBtn.addEventListener('click', () => {
     }
 })
 
+startHowToPlayBtn.addEventListener('click', startHowToPlayMode);
+
 scoreOKBtn.addEventListener('click', () => {
     scoreScreen.style.display = 'none';
-    startPlayBtn.value = 'Play again \u21BA';
     startScreen.style.display = 'flex';
+    if (!isHowToPlayMode) {
+        startPlayBtn.value = 'Play again \u21BA';
+    }
 })
 
 calcBtn.forEach(v => v.addEventListener('click', (e) => calcBtnPress(e.target.textContent)));
