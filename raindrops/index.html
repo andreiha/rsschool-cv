@@ -42,16 +42,14 @@
             <p hidden id="customize-warning">Set the correct value!</p>
         </div>
     </div>
-    <div id="finish-screen" class="screens">
-        <div class="screen-buttons">
-            <input type="button" id="finish-button__play" class="start-btn" value="Play again &#8634;">
-            <input type="button" id="finish-button__how-to-play" class="start-btn" value="How to play &#63;">
-        </div>
+    <div id="score-screen" class="screens">
         <div id="stats">
-            <div class="stats__text">Your score is: <span id="stats__result">245</span> points &#128293;</div>
+            <h2 class="stats__text" id="stats__text_header">Game score &#128293;:</h2>
+            <div class="stats__text">Your score is: <span id="stats__result">245</span> points</div>
             <div class="stats__text">Tasks solved: <span id="stats__right">23</span></div>
             <div class="stats__text">Wrong decisions: <span id="stats__mistakes">23</span></div>
         </div>
+        <input type="button" id="score-screen__OK-button" class="start-btn" value="OK!">
     </div>
     <div id="game">
         <section id="display-area">

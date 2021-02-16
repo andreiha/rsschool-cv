@@ -21,7 +21,7 @@ body {
   flex-direction: column;
 }
 
-#finish-screen {
+#score-screen {
   display: none;
 }
 
@@ -40,7 +40,6 @@ body {
   font-weight: 700;
   font-size: 25px;
   margin-top: 20px;
-  background-color: rgb(145, 214, 230, 0.9);
   user-select: none;
   outline: none;
   cursor: pointer;
@@ -57,6 +56,13 @@ body {
 .start-btn:active {
   background: rgb(145, 214, 230);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.5) inset;
+}
+
+#score-screen__OK-button {
+  width: 140px;
+  height: 50px;
+  border-radius: 5px;
+  margin-top: 30px;
 }
 
 #customization-section {
@@ -82,6 +88,10 @@ body {
   color: #d6eeee;
   font-size: 28px;
   user-select: none;
+}
+
+#stats__text_header {
+  font-size: 35px;
 }
 
 #game {

@@ -2,9 +2,8 @@ const startScreen = document.getElementById('start-screen');
 const startPlayBtn = document.getElementById('start-button__play');
 const startHowToPlayBtn = document.getElementById('start-button__how-to-play');
 
-const finishScreen = document.getElementById('finish-screen');
-const finishPlayBtn = document.getElementById('finish-button__play');
-const finishHowToPlayBtn = document.getElementById('finish-button__how-to-play');
+const scoreScreen = document.getElementById('score-screen');
+const scoreOKBtn = document.getElementById('score-screen__OK-button');
 const statsResult = document.getElementById('stats__result');
 const statsRight = document.getElementById('stats__right');
 const statsMistakes = document.getElementById('stats__mistakes');
@@ -68,10 +67,8 @@ let intervalBetweenRainDrops = 8000;
 
 function startGame() {
     isStartGame = !isStartGame;
-    refreshToDefault();
     increaseComplexity();
-    if (manualSetOperand){
-        console.log('Запуск ManualValues из startGame')
+    if (manualSetOperand) {
         setManualValues();
     }
     audioControl();
@@ -92,7 +89,8 @@ function stopGame() {
     manualSetOperand = false;
     rainDropsArr.forEach(e => e.element.remove());
     rainDropsArr.length = 0;
-    finishScreen.style.display = 'flex';
+    refreshToDefault();
+    scoreScreen.style.display = 'flex';
 }
 
 class RainDrop {
@@ -201,18 +199,11 @@ function moveWaves() {
     }
 }
 
-function setOperator(min = 1, max = 4) {
+function setOperator() {
     if (!manualSetOperand) {
-        let value = Math.round(min - 0.5 + Math.random() * (max - min + 1));
-        if (value === 1) {
-            lastOperator = '+';
-        } else if (value === 2) {
-            lastOperator = '-';
-        } else if (value === 3) {
-            lastOperator = '*';
-        } else if (value === 4) {
-            lastOperator = '/';
-        }
+        const operatorArr = ['+', '-', '*', '/'];
+        let randomIndex = Math.floor(Math.random() * operatorArr.length);
+        lastOperator = operatorArr[randomIndex];
         return lastOperator;
     } else {
         let randomIndex = Math.floor(Math.random() * customizeCheckedOperatorArr.length);
@@ -415,9 +406,10 @@ startPlayBtn.addEventListener('click', () => {
     }
 })
 
-finishPlayBtn.addEventListener('click', () => {
-    finishScreen.style.display = 'none';
-    startGame();
+scoreOKBtn.addEventListener('click', () => {
+    scoreScreen.style.display = 'none';
+    startPlayBtn.value = 'Play again \u21BA';
+    startScreen.style.display = 'flex';
 })
 
 audioIcon.addEventListener('click', audioControl);
