@@ -344,14 +344,11 @@ function checkAnswer() {
         if (rainDropsArr[0].rainDropExtra === true) {
             rainDropsArr[0].element.style.boxShadow = '0 0 5px 10px rgba(187, 255, 0, 0.8)';
             rainDropsArr.shift();
-            rainDropsArr.forEach(e => e.element.remove());
-            let count = 0;
-            for (let i = 0; i < rainDropsArr.length; i++) {
-                rainDropsArr[i].wasDecided = true;
+            rainDropsArr.forEach(e => {
+                e.element.remove();
+                e.wasDecided = true;
                 rainDropsArr.shift();
-                ++count;
-                console.log(`Каждый проход цикла ${count}`);
-            };
+            });
             playZone.style.height = '';
             waterZone.style.height = '';
         } else {
