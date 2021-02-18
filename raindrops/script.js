@@ -44,8 +44,8 @@ let isStartGame = false;
 let isHowToPlayMode = false;
 let gameScoreStartStep = 10;
 let counterRainDrops = 1;
-let counterMistakes = 0;
-let counterRight = 0;
+let counterWrongAnswers = 0;
+let counterRightAnswers = 0;
 let silentMode = false;
 
 const lowWaterLevel = '19%';
@@ -89,7 +89,6 @@ function startGame() {
             nextRainDrop = new RainDrop();
         }
         rainDropsArr.push(nextRainDrop);
-        console.log(rainDropsArr);
         startTimerId = setTimeout(repeatCalls, intervalBetweenRainDrops); 
     }, intervalBetweenRainDrops);
 }
@@ -228,7 +227,6 @@ function setStartPosition() {
     let numRainDropWidth = parseInt(rainDropWidth);
     let startPosition = Math.random() * (playZone.offsetWidth - numRainDropWidth);
     if (startPosition > rainDropPreviousPosition - numRainDropWidth && startPosition < rainDropPreviousPosition + numRainDropWidth) {
-//        console.log("Перезапуск функции, капля поверх предыдущей");
         return setStartPosition();
     }
     rainDropPreviousPosition = startPosition;
@@ -337,7 +335,7 @@ function checkAnswer() {
     if (rainDropsArr[0].result === Number(displayOutput.value)) {
         playCorrectAnswerSound();
         getGameScore('plus');
-        ++counterRight;
+        ++counterRightAnswers;
         rainDropsArr[0].wasDecided = true;
         rainDropsArr[0].element.style.transform = 'scale(0)';
         rainDropsArr[0].element.style.transition = 'transform 1s';
@@ -347,21 +345,21 @@ function checkAnswer() {
             rainDropsArr.forEach(e => {
                 e.element.remove();
                 e.wasDecided = true;
-                rainDropsArr.shift();
             });
+            rainDropsArr.length = 0;
             playZone.style.height = '';
             waterZone.style.height = '';
         } else {
             rainDropsArr[0].element.style.boxShadow = '0 0 5px 10px rgba(113, 214, 230, 0.8)';
             rainDropsArr.shift();
         }
-    } else if (rainDropsArr[0].result !== Number(displayOutput.value)) {
+    } else {
         playWrongAnswerSound();
         rainDropsArr[0].element.style.boxShadow = '0 0 5px 10px rgba(255, 69, 0, 0.8)';
         setTimeout(() => {
             rainDropsArr[0].element.style.boxShadow = '';
         }, 100);
-        ++counterMistakes;
+        ++counterWrongAnswers;
     }
 }
 
@@ -416,22 +414,23 @@ function getGameScore(direction) {
 
 function writeStats() {
     statsResult.innerHTML = scoreOutput.innerHTML;
-    statsRight.innerHTML = counterRight;
-    statsMistakes.innerHTML = counterMistakes;
+    statsRight.innerHTML = counterRightAnswers;
+    statsMistakes.innerHTML = counterWrongAnswers;
 }
 
 function refreshToDefault() {
     gameScoreStartStep = 10;
     scoreOutput.innerHTML = 0;
     counterRainDrops = 0;
-    counterMistakes = 0;
-    counterRight = 0;
+    counterWrongAnswers = 0;
+    counterRightAnswers = 0;
     firstOperandMin = 6;
     firstOperandMax = 8;
     secondOperandMin = 2;
     secondOperandMax = 8;
     fallingSpeedRainDrops = 25;
     intervalBetweenRainDrops = 6000;
+    displayOutput.value = '';
     playZone.removeAttribute('style');
     waterZone.removeAttribute('style');
 }
@@ -441,14 +440,14 @@ function increaseComplexity() {
         if (fallingSpeedRainDrops > 7) {
             fallingSpeedRainDrops -= 1.5;
             intervalBetweenRainDrops -= 400;
-//            console.log(`Увеличена скорость падения капель, значение: ${fallingSpeedRainDrops}, интервал: ${intervalBetweenRainDrops}`);
+            console.log(`Увеличена скорость падения капель, значение: ${fallingSpeedRainDrops}, интервал: ${intervalBetweenRainDrops}`);
         }
         if (!manualSetOperand) { 
             firstOperandMin += 0.2;
             ++firstOperandMax;
             secondOperandMin += 0.2;
             secondOperandMax += 0.5;
-//            console.log(`Сложность: firstOp(${firstOperandMin}, ${firstOperandMax}), secondOp(${secondOperandMin}, ${secondOperandMax})`);
+            console.log(`Сложность: firstOp(${firstOperandMin}, ${firstOperandMax}), secondOp(${secondOperandMin}, ${secondOperandMax})`);
         }
     }, 10000);
 }
@@ -547,10 +546,6 @@ function startHowToPlayMode() {
 
 
 startPlayBtn.addEventListener('click', () => {
-    if (!manualSetOperand) {
-        startScreen.style.display = 'none';
-        startGame();
-    }
     if (manualSetOperand) {
         if (customizeNumberValidation.every(e => e.value >= 1 && e.value <= 99)) {
             startScreen.style.display = 'none';
@@ -558,6 +553,9 @@ startPlayBtn.addEventListener('click', () => {
         } else {
             customizeWarning.hidden = false;
         }
+    } else {
+        startScreen.style.display = 'none';
+        startGame();
     }
 })
 
