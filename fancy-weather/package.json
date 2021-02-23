@@ -1,0 +1,38 @@
+{
+  "name": "fancy-weather",
+  "version": "1.0.0",
+  "description": "https://andreiha.github.io/rsschool-cv/\r https://andreiha.github.io/rsschool-cv/cv",
+  "main": "index.js",
+  "scripts": {
+    "start": "lite-server",
+    "build": "webpack --mode development",
+    "dev": "webpack-dev-server --progress --colors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreiha/rsschool-cv.git"
+  },
+  "author": "Andreiha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andreiha/rsschool-cv/issues"
+  },
+  "homepage": "https://github.com/andreiha/rsschool-cv#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.2",
+    "bootstrap": "^4.6.0",
+    "jquery": "^3.5.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "lite-server": "^2.6.1",
+    "style-loader": "^0.20.3",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "3.11.2"
+  }
+}
