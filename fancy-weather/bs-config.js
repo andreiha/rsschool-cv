@@ -1,7 +1,7 @@
 module.exports = {
     "port": 3000,  
-    "notify": false, // не показывать в браузере чёрное окошко BrowserSync
-    "ui": false, // не открывать отдельный порт для управления BrowserSync
-    "files":  "*.none", // следить за изменением таких файлов, то есть никаких
+    "notify": false,
+    "ui": false,
+    "files":  "*.none",
     "server": { "baseDir": "./dist" }
 };
