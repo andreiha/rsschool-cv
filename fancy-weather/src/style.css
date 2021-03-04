@@ -69,3 +69,8 @@ body {
   border-bottom-left-radius: 0px;
   margin-left: -5px;
 }
+
+#weather,
+#future-weather {
+  font-size: 30px;
+}
