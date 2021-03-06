@@ -21,6 +21,11 @@ const elementNext1DayTemp = document.getElementById('next-1-day__temperature');
 const elementNext2DayTemp = document.getElementById('next-2-day__temperature');
 const elementNext3DayTemp = document.getElementById('next-3-day__temperature');
 
+const elementCurrentIcon = document.getElementById('icon__now-img');
+const elementNext1DayIcon = document.getElementById('next-1-day__weather-icon-img');
+const elementNext2DayIcon = document.getElementById('next-2-day__weather-icon-img');
+const elementNext3DayIcon = document.getElementById('next-3-day__weather-icon-img');
+
 let currentLanguage = 'en';
 let currentScale = 'celsium';
 
@@ -107,6 +112,7 @@ function toggleTemperatureButton() {
 		elementFahrenheitButton.classList.add('transparent');
 	}
 	localStorage.setItem('scale', currentScale);
+	setCurrentWeatherScale();
 }
 
 function loadSaveScale() {
@@ -177,6 +183,9 @@ function setCurrentWeatherScale() {
 		} else {
 			data.weather.scale = 'celsium';
 		}
+		if (elementWeatherLocation.innerHTML !== '') {
+			fillDOMContent();
+		}
 	}
 }
 
@@ -188,6 +197,13 @@ function convertCelsiumFahrenheit(value) {
 		value = (value - 32) / 1.8;
 	}
 	return value;
+}
+
+function getIcons() {
+	elementCurrentIcon.src = `http://openweathermap.org/img/wn/${data.weather.currentIcon}@2x.png`;
+	elementNext1DayIcon.src = `http://openweathermap.org/img/wn/${data.weather.nextFirstDayIcon}@2x.png`;
+	elementNext2DayIcon.src = `http://openweathermap.org/img/wn/${data.weather.nextSecondDayIcon}@2x.png`;
+	elementNext3DayIcon.src = `http://openweathermap.org/img/wn/${data.weather.nextThirdDayIcon}@2x.png`;
 }
 
 function fillDOMContent() {
@@ -218,7 +234,8 @@ function controlWeather() {
 		.then((data) => loadWeather(data))
 		.then((data) => setCurrentWeatherScale(data))
 		.then((data) => fillDOMContent(data))
-		.then((data) => setDateAndTime(data));
+		.then((data) => setDateAndTime(data))
+		.then((data) => getIcons(data));
 }
 
 Initialization();
