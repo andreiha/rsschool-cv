@@ -4,11 +4,12 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" />
 		<link rel="stylesheet" href="style.css" />
 		<title>Fancy Weather</title>
 	</head>
 	<body>
-		<section id="controllers">
+		<header id="controllers">
 			<div id="controllers__buttons">
 				<input id="refresh-button" class="buttons" type="button" value="&#128472;" />
 				<select id="language-button" class="buttons">
@@ -21,51 +22,60 @@
 				</span>
 			</div>
 			<div class="controllers__search">
-				<input id="town-input" class="buttons" type="text" placeholder=" Search city" />
+				<input id="town-input" type="text" placeholder=" Search city" />
 				<input id="search-button" class="buttons" type="button" value="SEARCH" />
 			</div>
-		</section>
-		<section id="weather">
-			<div id="weather-location"></div>
-			<div id="weather-date-and-time">
-				<span id="weather-date"></span>
-				<span id="weather-time"></span>
-			</div>
-			<div id="weather-temperature">
-				<span id="temperature__now"></span>
-				<span id="icon__now"><img id="icon__now-img"></span>
-			</div>
-			<div id="weather-description">
-				<div id="weather__summary"></div>
-				<div id="weather__apparent-temperature"></div>
-				<div id="weather__wind"></div>
-				<div id="weather__humidity"></div>
-			</div>
-		</section>
-		<section id="future-weather">
-			<div id="next-1-day">
-				<div id="next-1-day__day-of-the-week"></div>
-				<div id="next-1-day__temperature"></div>
-				<div id="next-1-day__weather-icon"><img id="next-1-day__weather-icon-img"></div>
-			</div>
-			<div id="next-2-day">
-				<div id="next-2-day__day-of-the-week"></div>
-				<div id="next-2-day__temperature"></div>
-				<div id="next-2-day__weather-icon"><img id="next-2-day__weather-icon-img"></div>
-			</div>
-			<div id="next-3-day">
-				<div id="next-3-day__day-of-the-week"></div>
-				<div id="next-3-day__temperature"></div>
-				<div id="next-3-day__weather-icon"><img id="next-3-day__weather-icon-img"></div>
-			</div>
-		</section>
-		<section id="geolocation">
-			<div id="geolocation__map"></div>
-			<div id="geolocation-coordinate">
-				<div id="geolocation-coordinate__latitude"></div>
-				<div id="geolocation-coordinate__longitude"></div>
-			</div>
-		</section>
+		</header>
+		<main>
+		<div id="left-container">
+			<section id="weather">
+				<div id="weather-location"></div>
+				<div id="weather-date-and-time">
+					<span id="weather-date"></span>
+					<span id="weather-time"></span>
+				</div>
+				<div id="weather-container">
+					<div id="weather-temperature">
+						<div id="temperature__now"></div>
+						<div id="icon__now"><img id="icon__now-img"></div>
+					</div>
+					<div id="weather-description">
+						<div id="weather__summary"></div>
+						<div id="weather__apparent-temperature"></div>
+						<div id="weather__wind"></div>
+						<div id="weather__humidity"></div>
+					</div>
+				</div>
+			</section>
+			<section id="future-weather">
+				<div id="next-1-day">
+					<div id="next-1-day__day-of-the-week" class="next-day__day-of-the-week"></div>
+					<span id="next-1-day__temperature" class="next-day__temperature"></span>
+					<span id="next-1-day__weather-icon"><img id="next-1-day__weather-icon-img"></span>
+				</div>
+				<div id="next-2-day">
+					<div id="next-2-day__day-of-the-week" class="next-day__day-of-the-week"></div>
+					<span id="next-2-day__temperature" class="next-day__temperature"></span>
+					<span id="next-2-day__weather-icon"><img id="next-2-day__weather-icon-img"></span>
+				</div>
+				<div id="next-3-day">
+					<div id="next-3-day__day-of-the-week" class="next-day__day-of-the-week"></div>
+					<span id="next-3-day__temperature" class="next-day__temperature"></span>
+					<span id="next-3-day__weather-icon" class="next-day__weather-icon"><img id="next-3-day__weather-icon-img"></span>
+				</div>
+			</section>
+		</div>
+		<div id="right-container">
+			<section id="geolocation">
+				<div id="geolocation__map"></div>
+				<div id="geolocation-coordinate">
+					<div id="geolocation-coordinate__latitude"></div>
+					<div id="geolocation-coordinate__longitude"></div>
+				</div>
+			</section>
+		</div>
+		</main>
+		<script src="https://api-maps.yandex.ru/2.1/?apikey=3fa3a97e-0568-4b90-9148-3bde4350bee3&lang=en_RU"></script>
 		<script src="index.js"></script>
 	</body>
 </html>

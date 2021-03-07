@@ -9,6 +9,7 @@ const elementCurrentTime = document.getElementById('weather-time');
 const elementCurrentDate = document.getElementById('weather-date');
 const elementWeatherLocation = document.getElementById('weather-location');
 const elementCurrentTemp = document.getElementById('temperature__now');
+const elementCurrentIcon = document.getElementById('icon__now-img');
 const elementWeatherDescription = document.getElementById('weather__summary');
 const elementWeatherFeelsLike = document.getElementById('weather__apparent-temperature');
 const elementWeatherWind = document.getElementById('weather__wind');
@@ -20,11 +21,13 @@ const elementNext3DayName = document.getElementById('next-3-day__day-of-the-week
 const elementNext1DayTemp = document.getElementById('next-1-day__temperature');
 const elementNext2DayTemp = document.getElementById('next-2-day__temperature');
 const elementNext3DayTemp = document.getElementById('next-3-day__temperature');
-
-const elementCurrentIcon = document.getElementById('icon__now-img');
 const elementNext1DayIcon = document.getElementById('next-1-day__weather-icon-img');
 const elementNext2DayIcon = document.getElementById('next-2-day__weather-icon-img');
 const elementNext3DayIcon = document.getElementById('next-3-day__weather-icon-img');
+
+const elementMap = document.getElementById('geolocation__map');
+const elementLatitude = document.getElementById('geolocation-coordinate__latitude');
+const elementLongitude = document.getElementById('geolocation-coordinate__longitude');
 
 let currentLanguage = 'en';
 let currentScale = 'celsium';
@@ -199,16 +202,26 @@ function convertCelsiumFahrenheit(value) {
 	return value;
 }
 
-function getIcons() {
+function loadIcons() {
 	elementCurrentIcon.src = `http://openweathermap.org/img/wn/${data.weather.currentIcon}@2x.png`;
 	elementNext1DayIcon.src = `http://openweathermap.org/img/wn/${data.weather.nextFirstDayIcon}@2x.png`;
 	elementNext2DayIcon.src = `http://openweathermap.org/img/wn/${data.weather.nextSecondDayIcon}@2x.png`;
 	elementNext3DayIcon.src = `http://openweathermap.org/img/wn/${data.weather.nextThirdDayIcon}@2x.png`;
 }
 
+function loadMap() {
+	elementMap.replaceChildren();
+	let myMap = new ymaps.Map('geolocation__map', {
+		center: [data.geocoding.latitude, data.geocoding.longitude],
+		zoom: 10,
+		controls: ['zoomControl', 'typeSelector', 'fullscreenControl'],
+	});
+	document.querySelector('.ymaps-2-1-78-copyrights-pane').remove();
+}
+
 function fillDOMContent() {
 	elementWeatherLocation.innerHTML = `${data.geocoding.city}, ${data.geocoding.country}`;
-	elementCurrentTemp.innerHTML = `${Math.round(data.weather.currentTemp)}&#176`;
+	elementCurrentTemp.innerHTML = `${Math.round(data.weather.currentTemp)}<span id="degree-sign">&#176</span>`;
 	elementWeatherDescription.innerHTML = data.weather.currentDescription;
 	elementWeatherFeelsLike.innerHTML = `${dictionary[currentLanguage].feelsLike}: ${Math.round(data.weather.currentFeelsLike)}&#176`;
 	elementWeatherWind.innerHTML = `${dictionary[currentLanguage].wind}: ${Math.round(data.weather.currentWindSpeed)} ${dictionary[currentLanguage].windSpeed}`;
@@ -216,6 +229,8 @@ function fillDOMContent() {
 	elementNext1DayTemp.innerHTML = `${Math.round(data.weather.nextFirstDayTemp)}&#176`;
 	elementNext2DayTemp.innerHTML = `${Math.round(data.weather.nextSecondDayTemp)}&#176`;
 	elementNext3DayTemp.innerHTML = `${Math.round(data.weather.nextThirdDayTemp)}&#176`;
+	elementLatitude.innerHTML = `Latitude: ${String(data.geocoding.latitude).split('.')[0]}&deg${String(data.geocoding.latitude).split('.')[1].slice(0, 2)}&#39`;
+	elementLongitude.innerHTML = `Longitude: ${String(data.geocoding.longitude).split('.')[0]}&deg${String(data.geocoding.longitude).split('.')[1].slice(0, 2)}&#39`;
 }
 
 function enterSearchValue(event) {
@@ -235,7 +250,8 @@ function controlWeather() {
 		.then((data) => setCurrentWeatherScale(data))
 		.then((data) => fillDOMContent(data))
 		.then((data) => setDateAndTime(data))
-		.then((data) => getIcons(data));
+		.then((data) => loadIcons(data))
+		.then((data) => loadMap(data));
 }
 
 Initialization();

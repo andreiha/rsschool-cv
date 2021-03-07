@@ -7,8 +7,9 @@
 body {
 	height: 100vh;
 	background: linear-gradient(rgb(47, 150, 163), rgb(48, 62, 143));
-	font-family: sans-serif;
-	color: white;
+	font-family: 'Montserrat', sans-serif;
+	font-style: normal;
+	color: #ffffff;
 }
 
 #controllers {
@@ -16,15 +17,18 @@ body {
 	justify-content: space-around;
 	margin-top: 10px;
 	flex-wrap: wrap;
+	max-width: 1440px;
+	margin: 20px auto 0 auto;
 }
 
 .buttons {
-	border-radius: 4px;
-	border: 1px solid black;
-	height: 30px;
-	width: 30px;
+	border-radius: 5px;
+	border: none;
+	height: 44px;
+	width: 44px;
 	outline: 0;
 	cursor: pointer;
+	background: rgba(174, 181, 185, 0.5);
 	font: 400 11px inherit;
 }
 
@@ -39,11 +43,10 @@ body {
 }
 
 #language-button {
-	width: 50px;
+	width: 71px;
 }
 
 #temperature__buttons {
-	width: 60px;
 }
 
 #fahrenheit-button {
@@ -54,27 +57,120 @@ body {
 #celsium-button {
 	border-top-left-radius: 0px;
 	border-bottom-left-radius: 0px;
-	margin-left: -5.5px;
-}
-
-#town-input {
-	width: 150px;
-	border-top-right-radius: 0px;
-	border-bottom-right-radius: 0px;
-}
-
-#search-button {
-	width: 60px;
-	border-top-left-radius: 0px;
-	border-bottom-left-radius: 0px;
-	margin-left: -5px;
-}
-
-#weather,
-#future-weather {
-	font-size: 30px;
+	margin-left: -4px;
 }
 
 .transparent {
-	opacity: 0.5;
+	background: rgba(76, 82, 85, 0.4);
+}
+
+#town-input {
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border: none;
+	height: 44px;
+	outline: 0;
+	cursor: pointer;
+	width: 254px;
+}
+
+#search-button {
+	width: 81px;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+	margin-left: -4px;
+}
+
+main {
+	max-width: 1440px;
+	display: flex;
+	margin: 0 auto;
+}
+
+#left-container {
+	text-transform: uppercase;
+	flex-basis: 50%;
+}
+
+#right-container {
+	flex-basis: 50%;
+}
+
+#weather-location {
+	font-weight: bold;
+	font-size: 44px;
+	line-height: 54px;
+}
+
+#weather-date-and-time {
+	text-transform: none;
+	font-weight: 600;
+	font-size: 24px;
+	line-height: 29px;
+}
+
+#weather-container {
+	display: flex;
+}
+
+#weather-temperature {
+	position: relative;
+}
+
+#temperature__now {
+	font-weight: bold;
+	font-size: 280px;
+}
+
+#degree-sign {
+	font-size: 100px;
+	vertical-align: 140px;
+	position: relative;
+	z-index: 1;
+}
+
+#icon__now {
+	position: absolute;
+	right: -150px;
+	top: -50px;
+}
+
+#icon__now-img {
+	width: 200px;
+}
+
+#weather-description {
+	font-weight: bold;
+	font-size: 22px;
+	line-height: 37px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+
+#future-weather {
+	display: flex;
+	justify-content: space-between;
+}
+
+.next-day__day-of-the-week {
+	font-weight: bold;
+	font-size: 22px;
+	line-height: 27px;
+}
+
+.next-day__temperature {
+	font-weight: 600;
+	font-size: 80px;
+	line-height: 98px;
+}
+
+#next-day__weather-icon {
+	padding: -150px;
+}
+
+#geolocation__map {
+	width: 300px;
+	height: 300px;
+	border-radius: 25px;
 }
