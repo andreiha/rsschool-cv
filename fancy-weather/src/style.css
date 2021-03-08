@@ -5,7 +5,6 @@
 }
 
 body {
-	height: 100vh;
 	background: linear-gradient(rgb(47, 150, 163), rgb(48, 62, 143));
 	font-family: 'Montserrat', sans-serif;
 	font-style: normal;
@@ -14,7 +13,7 @@ body {
 
 #controllers {
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-between;
 	margin-top: 10px;
 	flex-wrap: wrap;
 	max-width: 1440px;
@@ -40,6 +39,7 @@ body {
 
 #refresh-button {
 	line-height: 20px;
+	margin-left: 20px;
 }
 
 #language-button {
@@ -79,6 +79,7 @@ body {
 	border-top-left-radius: 0px;
 	border-bottom-left-radius: 0px;
 	margin-left: -4px;
+	margin-right: 100px;
 }
 
 main {
@@ -90,16 +91,18 @@ main {
 #left-container {
 	text-transform: uppercase;
 	flex-basis: 50%;
+	margin-left: 20px;
 }
 
 #right-container {
 	flex-basis: 50%;
+	margin-right: 20px;
 }
 
 #weather-location {
 	font-weight: bold;
 	font-size: 44px;
-	line-height: 54px;
+	margin-top: 20px;
 }
 
 #weather-date-and-time {
@@ -111,27 +114,33 @@ main {
 
 #weather-container {
 	display: flex;
+	justify-content: space-between;
 }
 
 #weather-temperature {
 	position: relative;
 }
 
+#weather-time {
+	margin-left: 15px;
+}
+
 #temperature__now {
 	font-weight: bold;
 	font-size: 280px;
+	line-height: 225px;
 }
 
 #degree-sign {
-	font-size: 100px;
-	vertical-align: 140px;
+	font-size: 120px;
+	vertical-align: 115px;
 	position: relative;
 	z-index: 1;
 }
 
 #icon__now {
 	position: absolute;
-	right: -150px;
+	right: -180px;
 	top: -50px;
 }
 
@@ -142,15 +151,17 @@ main {
 #weather-description {
 	font-weight: bold;
 	font-size: 22px;
-	line-height: 37px;
+	line-height: 33px;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
+	margin-left: 20px;
 }
 
 #future-weather {
 	display: flex;
 	justify-content: space-between;
+	margin-top: 30px;
 }
 
 .next-day__day-of-the-week {
@@ -159,18 +170,37 @@ main {
 	line-height: 27px;
 }
 
+.next-day-container {
+	display: flex;
+}
+
 .next-day__temperature {
 	font-weight: 600;
 	font-size: 80px;
-	line-height: 98px;
 }
 
-#next-day__weather-icon {
-	padding: -150px;
+.next-day__icons {
+	width: 70px;
+}
+
+#geolocation {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 #geolocation__map {
-	width: 300px;
-	height: 300px;
+	width: 250px;
+	height: 250px;
 	border-radius: 25px;
+}
+
+#geolocation-coordinate {
+
+}
+
+#geolocation-coordinate__latitude,
+#geolocation-coordinate__longitude {
+	text-align: right;
 }

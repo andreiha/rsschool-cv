@@ -203,10 +203,10 @@ function convertCelsiumFahrenheit(value) {
 }
 
 function loadIcons() {
-	elementCurrentIcon.src = `http://openweathermap.org/img/wn/${data.weather.currentIcon}@2x.png`;
-	elementNext1DayIcon.src = `http://openweathermap.org/img/wn/${data.weather.nextFirstDayIcon}@2x.png`;
-	elementNext2DayIcon.src = `http://openweathermap.org/img/wn/${data.weather.nextSecondDayIcon}@2x.png`;
-	elementNext3DayIcon.src = `http://openweathermap.org/img/wn/${data.weather.nextThirdDayIcon}@2x.png`;
+	elementCurrentIcon.src = `icons/${data.weather.currentIcon}.svg`;
+	elementNext1DayIcon.src = `icons/${data.weather.nextFirstDayIcon}.svg`;
+	elementNext2DayIcon.src = `icons/${data.weather.nextSecondDayIcon}.svg`;
+	elementNext3DayIcon.src = `icons/${data.weather.nextThirdDayIcon}.svg`;
 }
 
 function loadMap() {
@@ -214,7 +214,7 @@ function loadMap() {
 	let myMap = new ymaps.Map('geolocation__map', {
 		center: [data.geocoding.latitude, data.geocoding.longitude],
 		zoom: 10,
-		controls: ['zoomControl', 'typeSelector', 'fullscreenControl'],
+		controls: ['zoomControl'],
 	});
 	document.querySelector('.ymaps-2-1-78-copyrights-pane').remove();
 }
