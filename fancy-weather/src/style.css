@@ -20,6 +20,10 @@ body {
 	margin: 20px auto 0 auto;
 }
 
+#controllers__buttons {
+	display: flex;
+}
+
 .buttons {
 	border-radius: 5px;
 	border: none;
@@ -29,24 +33,48 @@ body {
 	cursor: pointer;
 	background: rgba(174, 181, 185, 0.5);
 	font: 400 11px inherit;
+	font-family: inherit;
 }
 
 .buttons:hover {
-	background: transparent;
-	color: #222;
-	border-color: #4676d7;
+	background: rgba(174, 181, 185, 0.7);
 }
 
 #refresh-button {
-	line-height: 20px;
 	margin-left: 20px;
+	background-image: url(icons/arrows.svg);
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 #language-button {
 	width: 71px;
+	font-weight: bold;
+	font-size: 14px;
+	margin-left: 10px;
+	color: #ffffff;
+	background: rgba(174, 181, 185, 0.5);
+	text-indent: 15px;
+	appearance: none;
+	background-image: url(icons/vector.svg);
+	background-repeat: no-repeat;
+	background-position: right;
+	background-position-x: calc(100% - 15px);
+}
+
+#language-button:hover {
+	background: rgba(174, 181, 185, 0.7);
 }
 
 #temperature__buttons {
+	margin-left: 10px;
+	display: flex;
+}
+
+.temperature-buttons {
+	font-weight: bold;
+	font-size: 14px;
+	color: #ffffff;
 }
 
 #fahrenheit-button {
@@ -57,29 +85,44 @@ body {
 #celsium-button {
 	border-top-left-radius: 0px;
 	border-bottom-left-radius: 0px;
-	margin-left: -4px;
 }
 
 .transparent {
 	background: rgba(76, 82, 85, 0.4);
+	color: rgba(255, 255, 255, 0.4);
+}
+
+#controllers__search {
+	display: flex;
 }
 
 #town-input {
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
-	border: none;
+	border: 1px solid rgba(174, 181, 185, 0.5);
+	background: rgba(76, 82, 85, 0.4);
 	height: 44px;
 	outline: 0;
 	cursor: pointer;
-	width: 254px;
+	width: 230px;
+	font-family: Montserrat;
+	font-weight: normal;
+	font-size: 14px;
+	color: #ffffff;
+}
+
+#town-input::placeholder {
+	color: rgba(255, 255, 255, 0.5);
 }
 
 #search-button {
-	width: 81px;
+	width: 80px;
 	border-top-left-radius: 0px;
 	border-bottom-left-radius: 0px;
-	margin-left: -4px;
-	margin-right: 100px;
+	margin-right: 20px;
+	font-weight: bold;
+	font-size: 14px;
+	color: #ffffff;
 }
 
 main {
@@ -183,21 +226,25 @@ main {
 	width: 70px;
 }
 
+#right-container {
+}
+
 #geolocation {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	justify-content: flex-end;
+	align-items: flex-end;
 }
 
 #geolocation__map {
-	width: 250px;
-	height: 250px;
+	width: 310px;
+	height: 310px;
 	border-radius: 25px;
+	overflow: hidden;
 }
 
 #geolocation-coordinate {
-
+	margin-top: 20px;
 }
 
 #geolocation-coordinate__latitude,

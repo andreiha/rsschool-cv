@@ -11,75 +11,75 @@
 	<body>
 		<header id="controllers">
 			<div id="controllers__buttons">
-				<input id="refresh-button" class="buttons" type="button" value="&#128472;" />
+				<input id="refresh-button" class="buttons" type="button" />
 				<select id="language-button" class="buttons">
 					<option value="en">EN</option>
 					<option value="ru">RU</option>
 				</select>
-				<span id="temperature__buttons">
-					<input id="fahrenheit-button" data-scale="fahrenheit" class="buttons temperature-buttons transparent" type="button" value="&#8457" />
-					<input id="celsium-button" data-scale="celsium" class="buttons temperature-buttons" type="button" value="&#8451" />
-				</span>
+				<div id="temperature__buttons">
+					<input id="fahrenheit-button" data-scale="fahrenheit" class="buttons temperature-buttons transparent" type="button" value="°F" />
+					<input id="celsium-button" data-scale="celsium" class="buttons temperature-buttons" type="button" value="°С" />
+				</div>
 			</div>
-			<div class="controllers__search">
+			<div id="controllers__search">
 				<input id="town-input" type="text" placeholder=" Search city" />
 				<input id="search-button" class="buttons" type="button" value="SEARCH" />
 			</div>
 		</header>
 		<main>
-		<div id="left-container">
-			<section id="weather">
-				<div id="weather-location"></div>
-				<div id="weather-date-and-time">
-					<span id="weather-date"></span>
-					<span id="weather-time"></span>
-				</div>
-				<div id="weather-container">
-					<div id="weather-temperature">
-						<div id="temperature__now"></div>
-						<div id="icon__now"><img id="icon__now-img"></div>
+			<div id="left-container">
+				<section id="weather">
+					<div id="weather-location"></div>
+					<div id="weather-date-and-time">
+						<span id="weather-date"></span>
+						<span id="weather-time"></span>
 					</div>
-					<div id="weather-description">
-						<div id="weather__summary"></div>
-						<div id="weather__apparent-temperature"></div>
-						<div id="weather__wind"></div>
-						<div id="weather__humidity"></div>
+					<div id="weather-container">
+						<div id="weather-temperature">
+							<div id="temperature__now"></div>
+							<div id="icon__now"><img id="icon__now-img" /></div>
+						</div>
+						<div id="weather-description">
+							<div id="weather__summary"></div>
+							<div id="weather__apparent-temperature"></div>
+							<div id="weather__wind"></div>
+							<div id="weather__humidity"></div>
+						</div>
 					</div>
-				</div>
-			</section>
-			<section id="future-weather">
-				<div id="next-1-day">
-					<div id="next-1-day__day-of-the-week" class="next-day__day-of-the-week"></div>
-					<div class="next-day-container">
-						<div id="next-1-day__temperature" class="next-day__temperature"></div>
-						<div id="next-1-day__weather-icon"><img id="next-1-day__weather-icon-img" class="next-day__icons"></div>
+				</section>
+				<section id="future-weather">
+					<div id="next-1-day">
+						<div id="next-1-day__day-of-the-week" class="next-day__day-of-the-week"></div>
+						<div class="next-day-container">
+							<div id="next-1-day__temperature" class="next-day__temperature"></div>
+							<div id="next-1-day__weather-icon"><img id="next-1-day__weather-icon-img" class="next-day__icons" /></div>
+						</div>
 					</div>
-				</div>
-				<div id="next-2-day">
-					<div id="next-2-day__day-of-the-week" class="next-day__day-of-the-week"></div>
-					<div class="next-day-container">
-						<div id="next-2-day__temperature" class="next-day__temperature"></div>
-						<div id="next-2-day__weather-icon"><img id="next-2-day__weather-icon-img" class="next-day__icons"></div>
+					<div id="next-2-day">
+						<div id="next-2-day__day-of-the-week" class="next-day__day-of-the-week"></div>
+						<div class="next-day-container">
+							<div id="next-2-day__temperature" class="next-day__temperature"></div>
+							<div id="next-2-day__weather-icon"><img id="next-2-day__weather-icon-img" class="next-day__icons" /></div>
+						</div>
 					</div>
-				</div>
-				<div id="next-3-day">
-					<div id="next-3-day__day-of-the-week" class="next-day__day-of-the-week"></div>
-					<div class="next-day-container">
-						<div id="next-3-day__temperature" class="next-day__temperature"></div>
-						<div id="next-3-day__weather-icon"><img id="next-3-day__weather-icon-img" class="next-day__icons"></div>
+					<div id="next-3-day">
+						<div id="next-3-day__day-of-the-week" class="next-day__day-of-the-week"></div>
+						<div class="next-day-container">
+							<div id="next-3-day__temperature" class="next-day__temperature"></div>
+							<div id="next-3-day__weather-icon"><img id="next-3-day__weather-icon-img" class="next-day__icons" /></div>
+						</div>
 					</div>
-				</div>
-			</section>
-		</div>
-		<div id="right-container">
-			<section id="geolocation">
-				<div id="geolocation__map"></div>
-				<div id="geolocation-coordinate">
-					<div id="geolocation-coordinate__latitude"></div>
-					<div id="geolocation-coordinate__longitude"></div>
-				</div>
-			</section>
-		</div>
+				</section>
+			</div>
+			<div id="right-container">
+				<section id="geolocation">
+					<div id="geolocation__map"></div>
+					<div id="geolocation-coordinate">
+						<div id="geolocation-coordinate__latitude"></div>
+						<div id="geolocation-coordinate__longitude"></div>
+					</div>
+				</section>
+			</div>
 		</main>
 		<script src="https://api-maps.yandex.ru/2.1/?apikey=3fa3a97e-0568-4b90-9148-3bde4350bee3&lang=en_RU"></script>
 		<script src="index.js"></script>

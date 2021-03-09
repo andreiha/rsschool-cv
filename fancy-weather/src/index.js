@@ -26,6 +26,7 @@ const elementNext2DayIcon = document.getElementById('next-2-day__weather-icon-im
 const elementNext3DayIcon = document.getElementById('next-3-day__weather-icon-img');
 
 const elementMap = document.getElementById('geolocation__map');
+const elementMapContainer = document.getElementById('geolocation');
 const elementLatitude = document.getElementById('geolocation-coordinate__latitude');
 const elementLongitude = document.getElementById('geolocation-coordinate__longitude');
 
@@ -46,7 +47,7 @@ const dictionary = {
 		daysList: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
 		daysShortList: ['Вск', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
 		monthList: ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'],
-		feelsLike: 'Ощущается как',
+		feelsLike: 'Ощущается',
 		wind: 'Ветер',
 		windSpeed: 'м/c',
 		humidity: 'Влажность',
@@ -68,6 +69,7 @@ function setDateAndTime() {
 	let today = new Date();
 	today.setHours(today.getUTCHours() + data.time.offset);
 	let day = today.getDay();
+	console.log(day);
 	let date = today.getDate();
 	let month = today.getMonth();
 	let hour = today.getHours();
@@ -210,6 +212,7 @@ function loadIcons() {
 }
 
 function loadMap() {
+	elementMapContainer.style.height = `${elementNext3DayTemp.getBoundingClientRect().top}px`;
 	elementMap.replaceChildren();
 	let myMap = new ymaps.Map('geolocation__map', {
 		center: [data.geocoding.latitude, data.geocoding.longitude],
