@@ -5,10 +5,14 @@
 }
 
 body {
-	background: linear-gradient(rgb(47, 150, 163), rgb(48, 62, 143));
+	background: rgb(47, 150, 163);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
 	font-family: 'Montserrat', sans-serif;
 	font-style: normal;
 	color: #ffffff;
+	height: 100%;
 }
 
 #controllers {
@@ -185,6 +189,7 @@ main {
 	position: absolute;
 	right: -180px;
 	top: -50px;
+	z-index: -1;
 }
 
 #icon__now-img {
@@ -199,6 +204,7 @@ main {
 	flex-direction: column;
 	justify-content: flex-end;
 	margin-left: 20px;
+	flex-basis: 40%;
 }
 
 #future-weather {
@@ -224,9 +230,6 @@ main {
 
 .next-day__icons {
 	width: 70px;
-}
-
-#right-container {
 }
 
 #geolocation {

@@ -1,3 +1,4 @@
+const elementRefreshButton = document.getElementById('refresh-button');
 const elementLanguageButton = document.getElementById('language-button');
 const elementFahrenheitButton = document.getElementById('fahrenheit-button');
 const elementCelsiumButton = document.getElementById('celsium-button');
@@ -29,9 +30,12 @@ const elementMap = document.getElementById('geolocation__map');
 const elementMapContainer = document.getElementById('geolocation');
 const elementLatitude = document.getElementById('geolocation-coordinate__latitude');
 const elementLongitude = document.getElementById('geolocation-coordinate__longitude');
+const elementBody = document.querySelector('body');
 
 let currentLanguage = 'en';
 let currentScale = 'celsium';
+let timeOfDay = '';
+let timeOfTheYear = '';
 
 const dictionary = {
 	en: {
@@ -69,10 +73,9 @@ function setDateAndTime() {
 	let today = new Date();
 	today.setHours(today.getUTCHours() + data.time.offset);
 	let day = today.getDay();
-	console.log(day);
 	let date = today.getDate();
-	let month = today.getMonth();
-	let hour = today.getHours();
+	let month = (data.time.month = today.getMonth());
+	let hour = (data.time.hour = today.getHours());
 	let min = today.getMinutes();
 	let sec = today.getSeconds();
 	elementCurrentTime.innerHTML = `${addZero(hour)}:${addZero(min)}:${addZero(sec)}`;
@@ -222,6 +225,67 @@ function loadMap() {
 	document.querySelector('.ymaps-2-1-78-copyrights-pane').remove();
 }
 
+function determineTimeOfDay() {
+	switch (true) {
+		case data.time.hour >= 5 && data.time.hour <= 11:
+			timeOfDay = 'morning';
+			break;
+		case data.time.hour >= 16 && data.time.hour <= 21:
+			timeOfDay = 'evening';
+			break;
+		case (data.time.hour > 21 && data.time.hour <= 24) || (data.time.hour >= 0 && data.time.hour < 5):
+			timeOfDay = 'night';
+			break;
+		default:
+			timeOfDay = 'day';
+	}
+}
+
+function determineTheSeason() {
+	switch (data.time.month) {
+		case 11:
+		case 0:
+		case 1:
+			timeOfTheYear = 'winter';
+			break;
+		case 2:
+		case 3:
+		case 4:
+			timeOfTheYear = 'spring';
+			break;
+		case 5:
+		case 6:
+		case 7:
+			timeOfTheYear = 'summer';
+			break;
+		case 8:
+		case 9:
+		case 10:
+			timeOfTheYear = 'summer';
+			break;
+	}
+}
+
+function getRandomNumber(min = 0, max = 100) {
+	let num = Math.floor(min + Math.random() * (max + 1 - min));
+	console.log(num);
+	return num;
+}
+
+function loadPictures() {
+	determineTimeOfDay();
+	determineTheSeason();
+	return fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=c5147c8dda00e6d3b6010a9f73970df1&tags=nature,${timeOfDay},${timeOfTheYear}&tag_mode=all&extras=url_h&format=json&nojsoncallback=1&per_page=100&media=photos`)
+		.then((response) => response.json())
+		.then((jsonResponse) => {
+			console.log(jsonResponse);
+			do {
+				data.image = jsonResponse.photos.photo[getRandomNumber(0, jsonResponse.photos.perpage)].url_h;
+			} while (data.image === undefined);
+			elementBody.style.backgroundImage = `url(${data.image})`;
+		});
+}
+
 function fillDOMContent() {
 	elementWeatherLocation.innerHTML = `${data.geocoding.city}, ${data.geocoding.country}`;
 	elementCurrentTemp.innerHTML = `${Math.round(data.weather.currentTemp)}<span id="degree-sign">&#176</span>`;
@@ -251,6 +315,7 @@ function controlWeather() {
 		.then((data) => getCoordinates(elementTownInput.value))
 		.then((data) => loadWeather(data))
 		.then((data) => setCurrentWeatherScale(data))
+		.then((data) => loadPictures(data))
 		.then((data) => fillDOMContent(data))
 		.then((data) => setDateAndTime(data))
 		.then((data) => loadIcons(data))
@@ -258,6 +323,8 @@ function controlWeather() {
 }
 
 Initialization();
+
+elementRefreshButton.addEventListener('click', loadPictures);
 
 elementLanguageButton.addEventListener('change', toggleCurrentLanguage);
 
