@@ -7,21 +7,21 @@
 body {
 	background: rgb(47, 150, 163);
 	background-repeat: no-repeat;
-	background-position: center center;
+	background-position: center;
 	background-size: cover;
 	font-family: 'Montserrat', sans-serif;
 	font-style: normal;
 	color: #ffffff;
-	height: 100%;
+	height: 100vh;
+	overflow-y: hidden;
 }
 
 #controllers {
 	display: flex;
 	justify-content: space-between;
-	margin-top: 10px;
 	flex-wrap: wrap;
 	max-width: 1440px;
-	margin: 20px auto 0 auto;
+	margin: 40px auto 0 auto;
 }
 
 #controllers__buttons {
@@ -44,11 +44,26 @@ body {
 	background: rgba(174, 181, 185, 0.7);
 }
 
+.buttons:active {
+	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
 #refresh-button {
-	margin-left: 20px;
-	background-image: url(icons/arrows.svg);
-	background-repeat: no-repeat;
-	background-position: center;
+	margin-left: 90px;
+	position: relative;
+}
+
+#refresh-button__arrows {
+	position: absolute;
+	width: 50%;
+	height: 50%;
+	top: 25%;
+	left: 25%;
+}
+
+#refresh-button__arrows:hover {
+	transform: rotate(360deg);
+	transition: 1s;
 }
 
 #language-button {
@@ -98,6 +113,7 @@ body {
 
 #controllers__search {
 	display: flex;
+	justify-content: space-between;
 }
 
 #town-input {
@@ -138,7 +154,7 @@ main {
 #left-container {
 	text-transform: uppercase;
 	flex-basis: 50%;
-	margin-left: 20px;
+	margin-left: 90px;
 }
 
 #right-container {
@@ -149,7 +165,7 @@ main {
 #weather-location {
 	font-weight: bold;
 	font-size: 44px;
-	margin-top: 20px;
+	margin-top: 55px;
 }
 
 #weather-date-and-time {
@@ -157,6 +173,7 @@ main {
 	font-weight: 600;
 	font-size: 24px;
 	line-height: 29px;
+	margin-top: 5px;
 }
 
 #weather-container {
@@ -210,7 +227,7 @@ main {
 #future-weather {
 	display: flex;
 	justify-content: space-between;
-	margin-top: 30px;
+	margin-top: 70px;
 }
 
 .next-day__day-of-the-week {

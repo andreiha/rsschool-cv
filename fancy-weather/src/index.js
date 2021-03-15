@@ -1,4 +1,5 @@
 const elementRefreshButton = document.getElementById('refresh-button');
+const elementRefreshButtonArrows = document.getElementById('refresh-button__arrows');
 const elementLanguageButton = document.getElementById('language-button');
 const elementFahrenheitButton = document.getElementById('fahrenheit-button');
 const elementCelsiumButton = document.getElementById('celsium-button');
@@ -36,6 +37,7 @@ let currentLanguage = 'en';
 let currentScale = 'celsium';
 let timeOfDay = '';
 let timeOfTheYear = '';
+let coordinatesIP;
 
 const dictionary = {
 	en: {
@@ -58,7 +60,7 @@ const dictionary = {
 	},
 };
 
-const data = {
+let data = {
 	geocoding: {},
 	weather: {},
 	time: {},
@@ -67,6 +69,19 @@ const data = {
 function Initialization() {
 	loadSaveLanguage();
 	loadSaveScale();
+	let promise = new Promise((resolve, reject) => {
+		console.log('Старт промиса');
+		resolve(getLocationByIP());
+	});
+	promise
+		.then((data) => getCoordinates(coordinatesIP))
+		.then((data) => loadWeather(data))
+		.then((data) => loadPictures(data))
+		.then((data) => setDateAndTime(data))
+		.then((data) => setCurrentWeatherScale(data))
+		.then((data) => fillDOMContent(data))
+		.then((data) => loadIcons(data))
+		.then((data) => loadMap(data));
 }
 
 function setDateAndTime() {
@@ -137,8 +152,7 @@ function getLocationByIP() {
 		.then((response) => response.json())
 		.then((jsonResponse) => {
 			console.log(jsonResponse);
-			data.geocoding.latitude = jsonResponse.loc.split(',')[0];
-			data.geocoding.longitude = jsonResponse.loc.split(',')[1];
+			coordinatesIP = jsonResponse.loc;
 			return data;
 		});
 }
@@ -275,14 +289,21 @@ function getRandomNumber(min = 0, max = 100) {
 function loadPictures() {
 	determineTimeOfDay();
 	determineTheSeason();
-	return fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=c5147c8dda00e6d3b6010a9f73970df1&tags=nature,${timeOfDay},${timeOfTheYear}&tag_mode=all&extras=url_h&format=json&nojsoncallback=1&per_page=100&media=photos`)
+	console.log(timeOfDay, timeOfTheYear);
+	return fetch(
+		`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=c5147c8dda00e6d3b6010a9f73970df1&tags=weather,nature,${timeOfDay},${timeOfTheYear},-people,-women,-girl,-child,-children,-men,-religion&tag_mode=all&extras=url_h&format=json&nojsoncallback=1&per_page=100&media=photos&sort=relevance&content_type=1`
+	)
 		.then((response) => response.json())
 		.then((jsonResponse) => {
 			console.log(jsonResponse);
+			console.log('Фоток:' + jsonResponse.photos.photo.length, 'Всего:' + jsonResponse.photos.total);
 			do {
-				data.image = jsonResponse.photos.photo[getRandomNumber(0, jsonResponse.photos.perpage)].url_h;
-			} while (data.image === undefined);
+				data.image = jsonResponse.photos.photo[getRandomNumber(0, jsonResponse.photos.photo.length)].url_h;
+			} while (data.image == undefined);
+		})
+		.then(() => {
 			elementBody.style.backgroundImage = `url(${data.image})`;
+			return data;
 		});
 }
 
@@ -312,12 +333,12 @@ function controlWeather() {
 		resolve();
 	});
 	promise
-		.then((data) => getCoordinates(elementTownInput.value))
+		.then((data) => (elementTownInput.value === '' ? getCoordinates(coordinatesIP) : getCoordinates(elementTownInput.value)))
 		.then((data) => loadWeather(data))
-		.then((data) => setCurrentWeatherScale(data))
 		.then((data) => loadPictures(data))
-		.then((data) => fillDOMContent(data))
 		.then((data) => setDateAndTime(data))
+		.then((data) => setCurrentWeatherScale(data))
+		.then((data) => fillDOMContent(data))
 		.then((data) => loadIcons(data))
 		.then((data) => loadMap(data));
 }
