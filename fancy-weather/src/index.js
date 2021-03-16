@@ -33,11 +33,17 @@ const elementLatitude = document.getElementById('geolocation-coordinate__latitud
 const elementLongitude = document.getElementById('geolocation-coordinate__longitude');
 const elementBody = document.querySelector('body');
 
+const elementMistakesTint = document.getElementById('mistakes-overlay-tint');
+const elementMistakesWindow = document.getElementById('mistakes-window');
+const elementMistakesText = document.getElementById('mistakes-window__text');
+const elementMistakesButton = document.getElementById('mistakes-window__button');
+
 let currentLanguage = 'en';
 let currentScale = 'celsium';
 let timeOfDay = '';
 let timeOfTheYear = '';
 let coordinatesIP;
+let verticalScreenWidth = 1000;
 
 const dictionary = {
 	en: {
@@ -48,6 +54,13 @@ const dictionary = {
 		wind: 'Wind',
 		windSpeed: 'm/s',
 		humidity: 'Humidity',
+		latitude: 'Latitude',
+		longitude: 'Longitude',
+		mistake: 'Oooops, we have the mistakes. Try to enter the correct name of the place.',
+		buttons: {
+			search: 'SEARCH',
+			placeholder: ' Search city',
+		},
 	},
 	ru: {
 		daysList: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
@@ -57,6 +70,13 @@ const dictionary = {
 		wind: 'Ветер',
 		windSpeed: 'м/c',
 		humidity: 'Влажность',
+		latitude: 'Широта',
+		longitude: 'Долгота',
+		mistake: 'Ууупс, произошла ошибка. Попробуйте ввести корректное наименование населенного пункта.',
+		buttons: {
+			search: 'ПОИСК',
+			placeholder: ' Введите город',
+		},
 	},
 };
 
@@ -81,7 +101,8 @@ function Initialization() {
 		.then((data) => setCurrentWeatherScale(data))
 		.then((data) => fillDOMContent(data))
 		.then((data) => loadIcons(data))
-		.then((data) => loadMap(data));
+		.then((data) => loadMap(data))
+		.catch(() => showHideMistakeMessage());
 }
 
 function setDateAndTime() {
@@ -112,6 +133,7 @@ function checkForExtraDays(n) {
 function toggleCurrentLanguage() {
 	currentLanguage = elementLanguageButton.value;
 	localStorage.setItem('language', currentLanguage);
+	toggleButtonLanguage();
 	if (data.geocoding.city) {
 		controlWeather();
 	}
@@ -123,6 +145,12 @@ function loadSaveLanguage() {
 	} else {
 		currentLanguage = elementLanguageButton.value = localStorage.getItem('language');
 	}
+	toggleButtonLanguage();
+}
+
+function toggleButtonLanguage() {
+	elementTownInput.placeholder = `${dictionary[currentLanguage].buttons.placeholder}`;
+	elementSearchButton.value = `${dictionary[currentLanguage].buttons.search}`;
 }
 
 function toggleTemperatureButton() {
@@ -229,7 +257,9 @@ function loadIcons() {
 }
 
 function loadMap() {
-	elementMapContainer.style.height = `${elementNext3DayTemp.getBoundingClientRect().top}px`;
+	if (document.documentElement.clientWidth > verticalScreenWidth) {
+		elementMapContainer.style.height = `${elementNext3DayTemp.getBoundingClientRect().top}px`;
+	}
 	elementMap.replaceChildren();
 	let myMap = new ymaps.Map('geolocation__map', {
 		center: [data.geocoding.latitude, data.geocoding.longitude],
@@ -296,10 +326,14 @@ function loadPictures() {
 		.then((response) => response.json())
 		.then((jsonResponse) => {
 			console.log(jsonResponse);
-			console.log('Фоток:' + jsonResponse.photos.photo.length, 'Всего:' + jsonResponse.photos.total);
-			do {
-				data.image = jsonResponse.photos.photo[getRandomNumber(0, jsonResponse.photos.photo.length)].url_h;
-			} while (data.image == undefined);
+			let randomNumber = getRandomNumber(0, jsonResponse.photos.photo.length - 1);
+			if (jsonResponse.photos.photo[randomNumber].url_h === undefined) {
+				do {
+					console.log('Перезапуск без фотки');
+					randomNumber = getRandomNumber(0, jsonResponse.photos.photo.length - 1);
+				} while (!jsonResponse.photos.photo[randomNumber].url_h);
+			}
+			data.image = jsonResponse.photos.photo[randomNumber].url_h;
 		})
 		.then(() => {
 			elementBody.style.backgroundImage = `url(${data.image})`;
@@ -317,14 +351,30 @@ function fillDOMContent() {
 	elementNext1DayTemp.innerHTML = `${Math.round(data.weather.nextFirstDayTemp)}&#176`;
 	elementNext2DayTemp.innerHTML = `${Math.round(data.weather.nextSecondDayTemp)}&#176`;
 	elementNext3DayTemp.innerHTML = `${Math.round(data.weather.nextThirdDayTemp)}&#176`;
-	elementLatitude.innerHTML = `Latitude: ${String(data.geocoding.latitude).split('.')[0]}&deg${String(data.geocoding.latitude).split('.')[1].slice(0, 2)}&#39`;
-	elementLongitude.innerHTML = `Longitude: ${String(data.geocoding.longitude).split('.')[0]}&deg${String(data.geocoding.longitude).split('.')[1].slice(0, 2)}&#39`;
+	elementLatitude.innerHTML = `${dictionary[currentLanguage].latitude}: ${String(data.geocoding.latitude).split('.')[0]}&deg${String(data.geocoding.latitude).split('.')[1].slice(0, 2)}&#39`;
+	elementLongitude.innerHTML = `${dictionary[currentLanguage].longitude}: ${String(data.geocoding.longitude).split('.')[0]}&deg${String(data.geocoding.longitude).split('.')[1].slice(0, 2)}&#39`;
 }
 
 function enterSearchValue(event) {
 	if (event.code === 'Enter') {
 		controlWeather();
 	}
+}
+
+function showHideMistakeMessage() {
+	if (elementMistakesTint.hidden === false) {
+		elementMistakesTint.hidden = true;
+		elementTownInput.value = '';
+		elementMistakesText.innerHTML = '';
+	} else {
+		elementMistakesTint.hidden = false;
+		elementMistakesText.innerHTML = `${dictionary[currentLanguage].mistake}`;
+	}
+}
+
+function rotationArrows() {
+	elementRefreshButtonArrows.classList.add('arrows_rotation');
+	setTimeout(() => elementRefreshButtonArrows.classList.remove('arrows_rotation'), 1000);
 }
 
 function controlWeather() {
@@ -340,18 +390,23 @@ function controlWeather() {
 		.then((data) => setCurrentWeatherScale(data))
 		.then((data) => fillDOMContent(data))
 		.then((data) => loadIcons(data))
-		.then((data) => loadMap(data));
+		.then((data) => loadMap(data))
+		.catch(() => showHideMistakeMessage());
 }
 
 Initialization();
 
 elementRefreshButton.addEventListener('click', loadPictures);
 
+elementRefreshButton.addEventListener('mousedown', rotationArrows);
+
 elementLanguageButton.addEventListener('change', toggleCurrentLanguage);
 
 elementTownInput.addEventListener('keydown', enterSearchValue);
 
 elementSearchButton.addEventListener('click', controlWeather);
+
+elementMistakesButton.addEventListener('click', showHideMistakeMessage);
 
 elementsTemperatureButtons.forEach((element) =>
 	element.addEventListener('click', (element) => {

@@ -14,12 +14,12 @@ body {
 	color: #ffffff;
 	height: 100vh;
 	overflow-y: hidden;
+	user-select: none;
 }
 
 #controllers {
 	display: flex;
 	justify-content: space-between;
-	flex-wrap: wrap;
 	max-width: 1440px;
 	margin: 40px auto 0 auto;
 }
@@ -61,7 +61,7 @@ body {
 	left: 25%;
 }
 
-#refresh-button__arrows:hover {
+.arrows_rotation {
 	transform: rotate(360deg);
 	transition: 1s;
 }
@@ -139,7 +139,7 @@ body {
 	width: 80px;
 	border-top-left-radius: 0px;
 	border-bottom-left-radius: 0px;
-	margin-right: 20px;
+	margin-right: 90px;
 	font-weight: bold;
 	font-size: 14px;
 	color: #ffffff;
@@ -159,7 +159,7 @@ main {
 
 #right-container {
 	flex-basis: 50%;
-	margin-right: 20px;
+	margin-right: 90px;
 }
 
 #weather-location {
@@ -196,16 +196,15 @@ main {
 }
 
 #degree-sign {
-	font-size: 120px;
-	vertical-align: 115px;
+	font-size: 110px;
+	vertical-align: 125px;
 	position: relative;
-	z-index: 1;
 }
 
 #icon__now {
 	position: absolute;
 	right: -180px;
-	top: -50px;
+	top: -65px;
 	z-index: -1;
 }
 
@@ -220,14 +219,14 @@ main {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
-	margin-left: 20px;
+	margin-left: 10px;
 	flex-basis: 40%;
 }
 
 #future-weather {
 	display: flex;
 	justify-content: space-between;
-	margin-top: 70px;
+	margin-top: 60px;
 }
 
 .next-day__day-of-the-week {
@@ -270,4 +269,234 @@ main {
 #geolocation-coordinate__latitude,
 #geolocation-coordinate__longitude {
 	text-align: right;
+}
+
+#mistakes-overlay-tint {
+	background: rgba(76, 82, 85, 0.6);
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+#mistakes-window {
+	width: 500px;
+	height: 260px;
+	font-size: 30px;
+	font-weight: 600;
+	background-color: rgba(76, 82, 85, 0.7);
+	color: rgb(228, 227, 227);
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	padding: 20px;
+	border-radius: 10px;
+	border: 3px solid rgba(174, 181, 185, 0.5);
+	text-align: justify;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+#mistakes-window__button {
+	height: 50px;
+	width: 120px;
+	font-size: 20px;
+	font-weight: 600;
+	margin-top: 20px;
+	font-family: inherit;
+	align-self: center;
+	background: rgba(255, 255, 255, 0.4);
+	color: rgb(228, 227, 227);
+}
+
+@media all and (max-width: 1150px) {
+	#refresh-button,
+	#left-container {
+		margin-left: 40px;
+	}
+
+	#search-button,
+	#right-container {
+		margin-right: 40px;
+	}
+}
+
+@media all and (max-width: 1050px) {
+	#refresh-button,
+	#left-container {
+		margin-left: 20px;
+	}
+
+	#search-button,
+	#right-container {
+		margin-right: 20px;
+	}
+}
+
+@media all and (max-width: 1000px) {
+	body {
+		height: auto;
+		overflow-y: auto;
+	}
+
+	main {
+		flex-wrap: wrap;
+		flex-direction: column;
+	}
+
+	#left-container,
+	#right-container {
+		margin: 0 auto;
+	}
+
+	#weather {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	#weather-container {
+		justify-content: center;
+	}
+
+	#weather-temperature {
+		display: flex;
+		align-items: center;
+		margin: 0 auto;
+	}
+	#weather-description {
+		margin-top: 40px;
+	}
+
+	#future-weather {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	#geolocation {
+		margin-top: 40px;
+		justify-content: flex-start;
+		align-items: center;
+	}
+
+	#geolocation-coordinate__latitude,
+	#geolocation-coordinate__longitude {
+		text-align: left;
+	}
+}
+
+@media all and (max-width: 730px) {
+	#temperature__now {
+		font-weight: bold;
+		font-size: 200px;
+		line-height: 160px;
+	}
+	#weather-container {
+		flex-wrap: wrap;
+	}
+
+	#degree-sign {
+		font-size: 100px;
+		vertical-align: 70px;
+	}
+
+	#icon__now {
+		position: static;
+	}
+
+	#icon__now-img {
+		width: 160px;
+	}
+
+	#weather-description {
+		margin-left: 0;
+	}
+}
+
+@media all and (max-width: 600px) {
+	#controllers {
+		flex-direction: column-reverse;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#controllers__buttons {
+		margin-top: 10px;
+	}
+
+	#refresh-button {
+		margin-left: 0;
+	}
+
+	#search-button {
+		margin-right: 0;
+	}
+}
+
+@media all and (max-width: 500px) {
+	#temperature__now {
+		font-weight: bold;
+		font-size: 140px;
+	}
+
+	#degree-sign {
+		font-size: 80px;
+		vertical-align: 45px;
+	}
+
+	#icon__now-img {
+		width: 140px;
+	}
+
+	.next-day__temperature {
+		font-weight: 600;
+		font-size: 60px;
+	}
+
+	.next-day__icons {
+		width: 60px;
+	}
+
+	#mistakes-window {
+		width: 370px;
+		height: 260px;
+		padding: 10px;
+	}
+
+	#mistakes-window__button {
+		margin-top: 10px;
+	}
+}
+
+@media all and (max-width: 375px) {
+	#temperature__now {
+		font-weight: bold;
+		font-size: 120px;
+	}
+
+	#degree-sign {
+		font-size: 70px;
+		vertical-align: 35px;
+	}
+
+	#icon__now-img {
+		width: 140px;
+	}
+
+	#mistakes-window {
+		width: 310px;
+		height: 260px;
+		padding: 10px;
+		font-size: 25px;
+		font-weight: 600;
+	}
+
+	#mistakes-window__button {
+		margin-top: 10px;
+	}
 }
