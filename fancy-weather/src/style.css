@@ -5,7 +5,6 @@
 }
 
 body {
-	background: rgb(47, 150, 163);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
@@ -15,6 +14,7 @@ body {
 	height: 100vh;
 	overflow-y: hidden;
 	user-select: none;
+	transition: background 0.5s linear;
 }
 
 #controllers {
@@ -271,8 +271,18 @@ main {
 	text-align: right;
 }
 
+#overlay-tint {
+	background: rgba(76, 82, 85, 0.4);
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -2;
+}
+
 #mistakes-overlay-tint {
-	background: rgba(76, 82, 85, 0.6);
+	background: rgba(76, 82, 85, 0.5);
 	width: 100%;
 	height: 100%;
 	position: fixed;
@@ -285,7 +295,7 @@ main {
 	height: 260px;
 	font-size: 30px;
 	font-weight: 600;
-	background-color: rgba(76, 82, 85, 0.7);
+	background-color: rgba(76, 82, 85, 0.9);
 	color: rgb(228, 227, 227);
 	position: absolute;
 	left: 0;

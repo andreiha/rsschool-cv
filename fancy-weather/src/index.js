@@ -37,6 +37,7 @@ const elementMistakesTint = document.getElementById('mistakes-overlay-tint');
 const elementMistakesWindow = document.getElementById('mistakes-window');
 const elementMistakesText = document.getElementById('mistakes-window__text');
 const elementMistakesButton = document.getElementById('mistakes-window__button');
+const elementImagePreloader = document.getElementById('image-preloader');
 
 let currentLanguage = 'en';
 let currentScale = 'celsium';
@@ -336,7 +337,11 @@ function loadPictures() {
 			data.image = jsonResponse.photos.photo[randomNumber].url_h;
 		})
 		.then(() => {
-			elementBody.style.backgroundImage = `url(${data.image})`;
+			let img = new Image();
+			img.src = data.image;
+			img.onload = () => {
+				elementBody.style.backgroundImage = `url(${data.image})`;
+			};
 			return data;
 		});
 }
