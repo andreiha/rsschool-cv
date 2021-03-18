@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap">
+    <title>Raindrops</title>
+</head>
+<body>
+    <div id="start-screen" class="screens">
+        <div class="screen-buttons">
+            <input type="button" id="start-button__play" class="start-btn" value="Play &#9654;">
+            <input type="button" id="start-button__how-to-play" class="start-btn" value="How to play &#63;">
+        </div>
+        <div id="customization-section">
+            <div id="customize-head">
+                <input type="checkbox" id="сustomize-checkbox">&nbsp;
+                <label for="сustomize-checkbox">Customize value</label>
+            </div>
+            <div hidden id="customize-table">
+                <p class="customize__title">Select the range of the first value (1-99):</p>
+                <label for="first-value__from">From</label>
+                <input type="number" id="first-value__from" class="value-validation" min="1" max="99">
+                <label for="first-value__to">- To</label>
+                <input type="number" id="first-value__to" class="value-validation" min="1" max="99">
+                <p class="customize__title">Select the range of the second value (1-99):</p>
+                <label for="second-value__from">From</label>
+                <input type="number" id="second-value__from" class="value-validation" min="1" max="99">
+                <label for="second-value__to">- To</label>
+                <input type="number" id="second-value__to" class="value-validation" min="1" max="99">
+                <p class="customize__title">Select operators:</p>
+                <label for="operator__+">+</label>
+                <input type="checkbox" data-operator="+" class="operator-validation" checked>&#8195;
+                <label for="operator__-">&#8722;</label>
+                <input type="checkbox" data-operator="-" class="operator-validation" checked>&#8195;
+                <label for="operator__*">&#215</label>
+                <input type="checkbox" data-operator="*" class="operator-validation" checked>&#8195;
+                <label for="operator__/">&#247</label>
+                <input type="checkbox" data-operator="/" class="operator-validation" checked>
+            </div>
+            <p hidden id="customize-warning">Set the correct value!</p>
+        </div>
+    </div>
+    <div id="score-screen" class="screens">
+        <div id="stats">
+            <h2 class="stats__text" id="stats__text_header">Game score &#128293;:</h2>
+            <div class="stats__text">Your score is: <span id="stats__result">245</span> points</div>
+            <div class="stats__text">Tasks solved: <span id="stats__right">23</span></div>
+            <div class="stats__text">Wrong decisions: <span id="stats__mistakes">23</span></div>
+        </div>
+        <input type="button" id="score-screen__OK-button" class="start-btn" value="OK!">
+    </div>
+    <div id="game">
+        <section id="display-area">
+            <div id="play-zone"></div>
+            <div id="water-zone">
+                <div id="waves">
+                    <svg id="waves__svg" viewBox="0 24 150 28" preserveAspectRatio="none">
+                        <defs>
+                            <path id="wave-defs" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                        </defs>
+                        <g id="wave-parallax">
+                            <use xlink:href="#wave-defs" x="50" y="0" fill="#91d6e6"/>
+                            <use xlink:href="#wave-defs" x="50" y="3" fill="#71d6e6"/>
+                            <use xlink:href="#wave-defs" x="50" y="6" fill="#91d6e6"/>  
+                        </g>
+                    </svg>
+                </div>
+                <div id="waves__bottom"></div>
+            </div>
+            <div id="stones"></div>
+        </section>
+        <section id="controls-area">
+            <div id="score">Score: <span id="score__output">0</span></div>
+            <div id="calc">
+                <div id="calc__wrapper">
+                    <div id="calc__display">
+                        <input id="calc__display__output" type="text" disabled>
+                    </div>
+                    <div id="calc__buttons">
+                        <span id="btn-7" class="btn btn-num">7</span>
+                        <span id="btn-8" class="btn btn-num">8</span>
+                        <span id="btn-9" class="btn btn-num">9</span>
+                        <span id="btn-clear" class="btn btn-wd">Clear</span>
+                        <span id="btn-4" class="btn btn-num">4</span>
+                        <span id="btn-5" class="btn btn-num">5</span>
+                        <span id="btn-6" class="btn btn-num">6</span>
+                        <span id="btn-1" class="btn btn-num">1</span>
+                        <span id="btn-2" class="btn btn-num">2</span>
+                        <span id="btn-3" class="btn btn-num">3</span>
+                        <span id="btn-enter" class="btn btn-wd">Enter</span>
+                        <span id="btn-0" class="btn btn-num">0</span>
+                        <span id="btn-del" class="btn btn-wd">Delete</span>
+                    </div>
+                </div>
+            </div>
+            <div id="settings">
+                <div id="settings__wrapper">
+                    <span id="fullscreen-icon">&#128470;</span>
+                    <span id="audio-icon">&#128263;</span>
+                </div>
+            </div>
+        </section>
+    </div>
+    <audio id="wave-sound" src="sound/sea-sound.mp3" loop></audio>
+    <audio id="correct-sound" src="sound/correct-answer.mp3"></audio>
+    <audio id="wrong-sound" src="sound/wrong-answer.mp3"></audio>
+<script src="script.js"></script>
+</body>
+</html>
