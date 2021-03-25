@@ -74,37 +74,37 @@ input {
 }
 
 .gray {
-    background-color: #6c757d;
+    background-color: #6c757d83;
     border-color: #d6d8db;
     color: #383d41;
 }
 
 .crimson {
-    background-color: #dc3545;
+    background-color: #dc354681;
     border-color: #f5c6cb;
     color: #721c24;
 }
 
 .chlorine {
-    background-color: #d4edda;
+    background-color: #d4edda81;
     border-color: #c3e6cb;
     color: #155724;
 }
 
 .orange {
-    background-color: #ffc107;
+    background-color: #ffc10781;
     border-color: #ffeeba;
     color: #856404;
 }
 
 .blue {
-    background-color: #17a2b8;
+    background-color: #17a3b87c;
     border-color: #bee5eb;
     color: #0c5460;
 }
 
 .light {
-    background-color: #f8f9fa;
+    background-color: #f8f9fa7e;
     border-color: #fdfdfe;
     color: #818182;
 }
