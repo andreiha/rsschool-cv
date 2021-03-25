@@ -1,0 +1,16 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "chat, websockets, socket.io",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app"
+  },
+  "author": "andreiha",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "nodemon-webpack-plugin": "^4.4.4"
+  }
+}
