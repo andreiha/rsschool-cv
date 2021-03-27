@@ -1,0 +1,110 @@
+* {
+    font-family: 'Comfortaa', sans-serif;
+    box-sizing: border-box;
+}
+
+html {
+    height: 90vh;
+}
+
+body {
+    margin: 10px;
+    height: 100%;
+    line-height: 1.5;
+}
+
+header {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+button,
+input {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+#change_username {
+    height: 3%;
+    display: inline-block;
+    padding: 3px;
+    background-color: rgb(169, 230, 245);
+    border: 1px outset rgb(79, 116, 238);
+}
+
+#chatroom {
+    border: 3px inset lightblue;
+    height: 85%;
+    overflow: auto;
+}
+
+#input_zone {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 6%;
+    min-height: 40px;
+    background-color: rgb(76, 119, 238);
+}
+
+#input_message {
+    width: 89%;
+    height: 80%;
+    font-size: 1.3rem;
+}
+
+#send_message {
+    height: 80%;
+    width: 10%;
+}
+
+.message {
+    padding: 10px;
+    margin: 12px;
+    width: auto;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.gray {
+    background-color: #6c757d83;
+    border-color: #d6d8db;
+    color: #383d41;
+}
+
+.crimson {
+    background-color: #dc354681;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.chlorine {
+    background-color: #d4edda81;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.orange {
+    background-color: #ffc10781;
+    border-color: #ffeeba;
+    color: #856404;
+}
+
+.blue {
+    background-color: #17a3b87c;
+    border-color: #bee5eb;
+    color: #0c5460;
+}
+
+.light {
+    background-color: #f8f9fa7e;
+    border-color: #fdfdfe;
+    color: #818182;
+}
